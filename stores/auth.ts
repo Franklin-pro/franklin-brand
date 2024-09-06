@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import type { MemberFormState, Member,Login, UpdateMember } from '~/types';
+import type { UserFormState,User, UpdateUser,Login } from '~/types';
 
 interface ApiResponse<T> {
   message: string;
@@ -10,10 +10,10 @@ interface ApiResponse<T> {
 }
 
 
-export const useMemberStore = defineStore('members', () => {
-  const members = ref<Member[]>([]);
+export const useStudentStore = defineStore('students', () => {
+  const members = ref<User[]>([]);
   const router = useRouter();
-  const user = ref<Member | null>(null);
+  const user = ref<User | null>(null);
   const token = ref<string | null>(null);
 
   const setToken = (data: string | null) => {
@@ -25,7 +25,7 @@ export const useMemberStore = defineStore('members', () => {
     }
   };
 
-  const setUser = (data: Member | null) => {
+  const setUser = (data: User | null) => {
     user.value = data;
     if (data) {
       localStorage.setItem('user', JSON.stringify(data));
@@ -33,28 +33,28 @@ export const useMemberStore = defineStore('members', () => {
       localStorage.removeItem('user');
     }
   };
-  const fetchMembers = async () => {
+  const fetchUsers = async () => {
     try {
-      const response = await axios.get<ApiResponse<Member[]>>('https://root-foundation.onrender.com/v1/member');
+      const response = await axios.get<ApiResponse<User[]>>('https://realme-backend.onrender.com/user');
       members.value = response.data.datas;
     } catch (error) {
       console.error('Failed to fetch members', error);
     }
   };
 
-  const createMember = async (data: MemberFormState) => {
+  const createAccount = async (data: UserFormState) => {
     try {
       const formData = new FormData();
-      if (data.memberImage) {
-        formData.append('memberImage', data.memberImage);
+      if (data.studentReport) {
+        formData.append('studentReport', data.studentReport);
       }
-      formData.append('userName', data.userName);
-      formData.append('email', data.email);
-      formData.append('course', data.course);
-      formData.append('password', data.password);
-      formData.append('role', data.role);
+      formData.append('firstName', data.firstName);
+      formData.append('lastName', data.lastName);
+      formData.append('age', data.age);
+      formData.append('sex', data.sex);
+      formData.append('grade', data.grade);
 
-      const response = await axios.post<ApiResponse<Member>>('https://root-foundation.onrender.com/v1/member', formData, {
+      const response = await axios.post<ApiResponse<User>>('https://realme-backend.onrender.com/user', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -62,15 +62,15 @@ export const useMemberStore = defineStore('members', () => {
 
       members.value.push(response.data.data);
       alert(response.data.message);
-      router.push('/Dashboard/members/view-members');
+      router.push('/Member-Dashboard/View-Students');
     } catch (error) {
       console.error('Failed to create member:', error);
     }
   };
   
-  const updateMember = async (id: string, data: UpdateMember) => {
+  const updateUser = async (id: string, data: UpdateUser) => {
     try {
-      const response = await axios.put<ApiResponse<Member>>(`https://root-foundation.onrender.com/v1/member/${id}`, data);
+      const response = await axios.put<ApiResponse<User>>(`https://realme-backend.onrender.com/user/${id}`, data);
       const index = members.value.findIndex(member => member.id === id);
       if (index !== -1) {
         members.value[index] = response.data.data;
@@ -81,9 +81,9 @@ export const useMemberStore = defineStore('members', () => {
     }
   };
 
-  const deleteMember = async (id: string) => {
+  const deleteUser = async (id: string) => {
     try {
-      const response = await axios.delete<ApiResponse<null>>(`https://root-foundation.onrender.com/v1/member/${id}`);
+      const response = await axios.delete<ApiResponse<null>>(`https://realme-backend.onrender.com/user/${id}`);
       members.value = members.value.filter(member => member.id !== id);
       alert(response.data.message);
     } catch (error) {
@@ -100,7 +100,7 @@ export const useMemberStore = defineStore('members', () => {
     }
   
     try {
-      const response = await fetch("http://localhost:3030/v1/member/login", {
+      const response = await fetch("https://realme-backend.onrender.com/users/login", {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -152,6 +152,5 @@ export const useMemberStore = defineStore('members', () => {
     setToken(null);
     await router.push('/login')
   }
-
-  return { members,logout, fetchMembers,setToken,setUser,signIn, createMember, updateMember, deleteMember };
+  return { members,signIn,logout, fetchUsers, createAccount, updateUser, deleteUser };
 });

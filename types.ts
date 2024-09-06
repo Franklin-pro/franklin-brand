@@ -1,28 +1,26 @@
-export interface CreateMemberData {
-    email: string;
-    username: string;
-    course: string;
-    password: string;
-    role: string;
-    image?: File | null; // Optional field for file upload
+export interface CreateBlogData {
+  blogName: string;
+  blogStatus: string;
+  blogDescription: string;
+  url:string;
+  blogImage?: string; 
   }
   
-  export interface CreateMember {
-    data: CreateMemberData;
+  export interface CreateBlogs {
+    data: CreateBlogData;
   }
-  export interface MemberFormState {
-    email: string;
-    userName: string;
-    course: string;
-    password: string;
-    role: string;
-    memberImage: File | null;
+  export interface BlogFormState {
+    blogName: string;
+    blogStatus: string;
+    blogDescription: string;
+    url:string;
+    blogImage?: File | null; 
   }
   export interface Login {
     email: string;
     password: string;
   }
-  export interface StudentFormState {
+  export interface UserFormState {
     firstName: string;
     lastName: string;
     age: string;
@@ -30,10 +28,10 @@ export interface CreateMemberData {
     grade: string;
     studentReport: File | null;
   }
-  export interface createStudent {
-    data: StudentFormState;
+  export interface createAccount {
+    data: UserFormState;
   }
-  export interface Students {
+  export interface User {
     _id:string;
     id: string;
     firstName: string;
@@ -43,7 +41,7 @@ export interface CreateMemberData {
     grade: string;
     studentReport?: string; // Assuming image is a URL or similar
   }
-export interface UpdateStudent{
+export interface UpdateUser{
   firstName: string;
   lastName: string;
   age: string;
@@ -59,7 +57,7 @@ export interface UpdateStudent{
   icon: string;
   click: () => void;
 }
-export interface UpdateMember {
+export interface updateBlog {
   _id: string;
   userName: string;
   email: string;
@@ -68,18 +66,17 @@ export interface UpdateMember {
   memberImage?: File | string; // Adjust this based on how the image is handled
 }
 
-export interface Member extends UpdateMember {
-  id:string;
-}
+// export interface Blog extends UpdateBlogs {
+//   id:string;
+// }
 
-  export interface Member {
+  export interface Blog {
     _id:string;
     id: string;
-    email: string;
-    userName: string;
-    course: string;
-    role: string;
+    blogName: string;
+    blogStatus: string;
+    blogDescription: string;
     url:string;
-    memberImage?: string; // Assuming image is a URL or similar
+    blogImage?: string; // Assuming image is a URL or similar
   }
   

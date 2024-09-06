@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import { useMemberStore } from '~/stores/members'; 
+import { useMemberStore } from '~/stores/blogs'; 
 import type { FormError, FormSubmitEvent } from '#ui/types';
 
 const state = reactive({
