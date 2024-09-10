@@ -2,7 +2,7 @@
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import type { BlogFormState, Blog, updateBlog } from '~/types';
+import type { Message, MessageFormState } from '~/types';
 
 interface ApiResponse<T> {
   message: string;
@@ -10,11 +10,11 @@ interface ApiResponse<T> {
   datas:T;
 }
 export const useMessageStore = defineStore('messages', () => {
-  const members = ref<Blog[]>([]);
+  const members = ref<Message[]>([]);
   const router = useRouter();
-  const user = ref<Blog | null>(null);
+  const user = ref<Message | null>(null);
 
-  const setBlogs = (data: Blog | null) => {
+  const setMessage = (data: Message | null) => {
     user.value = data;
     if (data) {
       localStorage.setItem('message', JSON.stringify(data));
@@ -22,57 +22,41 @@ export const useMessageStore = defineStore('messages', () => {
       localStorage.removeItem('message');
     }
   };
-  const fetchBlogs = async () => {
+  const fetchMessage = async () => {
     try {
-      const response = await axios.get<ApiResponse<Blog[]>>('https://realme-backend.onrender.com/blogs');
+      const response = await axios.get<ApiResponse<Message[]>>('https://realme-backend.onrender.com/message');
       members.value = response.data.datas;
     } catch (error) {
-      console.error('Failed to fetch members', error);
+      console.error('Failed to fetch message', error);
     }
   };
 
-  const createBlogs = async (data: BlogFormState) => {
+  const sendmessage = async (data: MessageFormState) => {
     try {
       const formData = new FormData();
-      if (data.blogImage) {
-        formData.append('blogImage', data.blogImage);
-      }
-      formData.append('blogName', data.blogName);
-      formData.append('blogDescription', data.blogDescription);
-      formData.append('blogStatus', data.blogStatus);
-      // formData.append('', data.password);
-      // formData.append('role', data.role);
-
-      const response = await axios.post<ApiResponse<Blog>>('https://realme-backend.onrender.com/blogs', formData, {
+      formData.append('fullName', data.fullName);
+      formData.append('email', data.email);
+      formData.append('phoneNumber', data.phoneNumber);
+      formData.append('campanyName', data.campanyName); // Ensure this matches your type
+      formData.append('message', data.message);
+  
+      const response = await axios.post<ApiResponse<Message>>('https://realme-backend.onrender.com/message', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-
+  
       members.value.push(response.data.data);
       alert(response.data.message);
       router.push('/Dashboard/members/view-members');
     } catch (error) {
-      console.error('Failed to create blogs:', error);
+      console.error('Failed to create message:', error);
     }
   };
   
-  const updateBlogs = async (id: string, data: updateBlog) => {
+  const deleteMessage = async (id: string) => {
     try {
-      const response = await axios.put<ApiResponse<Blog>>(`https://realme-backend.onrender.com/blogs/${id}`, data);
-      const index = members.value.findIndex(member => member.id === id);
-      if (index !== -1) {
-        members.value[index] = response.data.data;
-      }
-      alert(response.data.message);
-    } catch (error) {
-      console.error('Failed to update blogs', error);
-    }
-  };
-
-  const deleteBlogs = async (id: string) => {
-    try {
-      const response = await axios.delete<ApiResponse<null>>(`https://realme-backend.onrender.com/blogs/${id}`);
+      const response = await axios.delete<ApiResponse<null>>(`https://realme-backend.onrender.com/message/${id}`);
       members.value = members.value.filter(member => member.id !== id);
       alert(response.data.message);
     } catch (error) {
@@ -82,5 +66,5 @@ export const useMessageStore = defineStore('messages', () => {
 
 
 
-  return { members, fetchBlogs,setBlogs, createBlogs, updateBlogs, deleteBlogs };
+  return { members, fetchMessage,setMessage, sendmessage,deleteMessage };
 });

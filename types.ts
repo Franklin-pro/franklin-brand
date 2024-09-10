@@ -16,6 +16,13 @@ export interface CreateBlogData {
     url:string;
     blogImage?: File | null; 
   }
+  export interface MessageFormState {
+    fullName:string,
+    email:string,
+    phoneNumber:string,
+    campanyName:string,
+    message:string
+  }
   export interface Login {
     email: string;
     password: string;
@@ -56,6 +63,15 @@ export interface UpdateUser{
   label: string;
   icon: string;
   click: () => void;
+}
+export interface Message {
+  id:string,
+  _id:string,
+  fullName:string,
+  email:string,
+  phoneNumber:Number,
+  campanyName:string,
+  message:string
 }
 export interface updateBlog {
   _id: string;
