@@ -78,8 +78,17 @@ import type { MessageFormState } from '~/types';
     {
       id: 1,
       icon: "i-heroicons:phone",
-      phoneNumber: "+123 456 789",
-      email: "info@example.com"
+      phoneNumber: "+250 783 446 449",
+    },
+    {
+      id: 1,
+      icon: "i-heroicons-envelope",
+      email: "franklinprogrammer@gmail.com.com"
+    },
+    {
+      id: 1,
+      icon: "i-heroicons-map-pin",
+      email: "P.O.BOX 123 KK 616 ST"
     },
     // Add more items if needed
   ];
