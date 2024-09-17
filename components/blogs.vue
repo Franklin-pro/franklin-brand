@@ -5,7 +5,7 @@
         <div class="flex items-end justify-between">
             <div class="flex-1 text-center lg:text-left">
                 <h2 class="text-3xl font-bold leading-tight text-blue-600 sm:text-4xl lg:text-5xl">Latest from blog</h2>
-                <p class="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600 lg:mx-0">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis.</p>
+                <p class="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600 lg:mx-0">my all blogs i posted you can know me better.</p>
             </div>
         </div>
 
