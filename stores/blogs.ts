@@ -1,90 +1,94 @@
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import type { BlogFormState, Blog,Login, updateBlog } from '~/types';
+import type {Blogs, BlogFormState, UpdateBlog } from '~/types';
 
 interface ApiResponse<T> {
   message: string;
   data: T;
-  datas:T;
+  datas: T;
 }
 
-
-export const useMemberStore = defineStore('blogs', () => {
-  const members = ref<Blog[]>([]);
+export const useBlogStore = defineStore('blogs', () => {
+  const blogs = ref<Blogs[]>([]);
   const router = useRouter();
-  const user = ref<Blog | null>(null);
-  const token = ref<string | null>(null);
+  const user = ref<Blogs | null>(null);
 
-  const setToken = (data: string | null) => {
-    token.value = data;
-    if (data) {
-      localStorage.setItem('token', data);
-    } else {
-      localStorage.removeItem('token');
-    }
-  };
 
-  const setUser = (data: Blog | null) => {
+
+  const setBlogs = (data: Blogs | null) => {
     user.value = data;
     if (data) {
-      localStorage.setItem('user', JSON.stringify(data));
+      localStorage.setItem('blogs', JSON.stringify(data));
     } else {
-      localStorage.removeItem('blog');
-    }
-  };
-  const fetchBlogs = async () => {
-    try {
-      const response = await axios.get<ApiResponse<Blog[]>>('https://realme-backend.onrender.com/blogs');
-      members.value = response.data.datas;
-    } catch (error) {
-      console.error('Failed to fetch members', error);
+      localStorage.removeItem('blogs');
     }
   };
 
-  const createBlogs = async (data: BlogFormState) => {
+  const fetchBlogs = async () => {
+    try {
+      const response = await axios.get<ApiResponse<Blogs[]>>('https://root-found-bn.onrender.com/v1/blogs');
+      blogs.value = response.data.datas;
+    } catch (error) {
+      console.error('Failed to fetch blogs', error);
+    }
+  };
+
+  const fetchBlog = async (id: string): Promise<Blogs> => {
+    try {
+      const response = await axios.get<ApiResponse<Blogs>>(`https://root-found-bn.onrender.com/v1/blogs/${id}`);
+     
+      return response.data.datas; 
+    } catch (error) {
+      console.error('Failed to fetch blog', error);
+      throw error; 
+    }
+  };
+  
+  
+  const createBlog = async (data: BlogFormState) => {
     try {
       const formData = new FormData();
       if (data.blogImage) {
         formData.append('blogImage', data.blogImage);
       }
       formData.append('blogName', data.blogName);
-      formData.append('blogDescription', data.blogDescription);
       formData.append('blogStatus', data.blogStatus);
-      // formData.append('', data.password);
-      // formData.append('role', data.role);
+      formData.append('blogDescription', data.blogDescription);
 
-      const response = await axios.post<ApiResponse<Blog>>('https://realme-backend.onrender.com/blogs', formData, {
+      const response = await axios.post<ApiResponse<Blogs>>('https://root-found-bn.onrender.com/v1/blogs/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      members.value.push(response.data.data);
+      blogs.value.push(response.data.data);
       alert(response.data.message);
-      router.push('/Dashboard/members/view-members');
+      router.push('/');
     } catch (error) {
-      console.error('Failed to create blogs:', error);
-    }
-  };
-  
-  const updateBlogs = async (id: string, data: updateBlog) => {
-    try {
-      const response = await axios.put<ApiResponse<Blog>>(`https://realme-backend.onrender.com/blogs/${id}`, data);
-      const index = members.value.findIndex(member => member.id === id);
-      if (index !== -1) {
-        members.value[index] = response.data.data;
-      }
-      alert(response.data.message);
-    } catch (error) {
-      console.error('Failed to update blogs', error);
+      console.error('Failed to create blog:', error);
     }
   };
 
-  const deleteBlogs = async (id: string) => {
+  const updateBlog = async (id: string, data: UpdateBlog) => {
     try {
-      const response = await axios.delete<ApiResponse<null>>(`https://realme-backend.onrender.com/blogs/${id}`);
-      members.value = members.value.filter(member => member.id !== id);
+      const response = await axios.put<ApiResponse<Blogs>>(`https://root-found-bn.onrender.com/v1/blogs/${id}`, data);
+      const index = blogs.value.findIndex(blog => blog.id === id);
+      if (index !== -1) {
+        blogs.value[index] = response.data.data;
+      }
+      alert(response.data.message);
+    } catch (error) {
+      console.error('Failed to update blog', error);
+    }
+  };
+
+
+
+  const deleteBlog = async (id: string) => {
+    try {
+      const response = await axios.delete<ApiResponse<null>>(`https://root-found-bn.onrender.com/v1/blogs/${id}`);
+      blogs.value = blogs.value.filter(blog => blog.id !== id);
       alert(response.data.message);
     } catch (error) {
       console.error('Failed to delete blog', error);
@@ -93,5 +97,6 @@ export const useMemberStore = defineStore('blogs', () => {
 
 
 
-  return { members, fetchBlogs,setToken,setUser, createBlogs, updateBlogs, deleteBlogs };
+
+  return { blogs,setBlogs, fetchBlogs, fetchBlog, createBlog, updateBlog, deleteBlog };
 });

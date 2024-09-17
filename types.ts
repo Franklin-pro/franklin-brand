@@ -9,13 +9,6 @@ export interface CreateBlogData {
   export interface CreateBlogs {
     data: CreateBlogData;
   }
-  export interface BlogFormState {
-    blogName: string;
-    blogStatus: string;
-    blogDescription: string;
-    url:string;
-    blogImage?: File | null; 
-  }
   export interface MessageFormState {
     fullName:string,
     email:string,
@@ -27,37 +20,9 @@ export interface CreateBlogData {
     email: string;
     password: string;
   }
-  export interface UserFormState {
-    firstName: string;
-    lastName: string;
-    age: string;
-    sex: string;
-    grade: string;
-    studentReport: File | null;
-  }
   export interface createAccount {
     data: UserFormState;
   }
-  export interface User {
-    _id:string;
-    id: string;
-    firstName: string;
-    lastName: string;
-    age: string;
-    sex: string;
-    grade: string;
-    studentReport?: string; // Assuming image is a URL or similar
-  }
-export interface UpdateUser{
-  firstName: string;
-  lastName: string;
-  age: string;
-  sex: string;
-  grade: string;
-  StudentReport: File | null;
-}
-
- // ~/type.ts
 
  export interface DropdownItem {
   label: string;
@@ -73,26 +38,69 @@ export interface Message {
   campanyName:string,
   message:string
 }
-export interface updateBlog {
+export interface BlogImage {
+  url: string;
+}
+
+export interface Blogs {
+  _id: string;
+  id: string;
+  blogName: string;
+  blogDescription: string;
+  blogStatus: string;
+  url: string;
+  blogImage?: BlogImage | undefined; // Optional BlogImage object
+}
+
+export interface BlogFormState {
+  blogName: string;
+  blogDescription: string;
+  blogStatus: string;
+  url: string;
+  blogImage: File | null; // blogImage is for handling the file upload
+}
+
+export interface UpdateBlog {
+  id: string;
+  blogName: string;
+  blogDescription: string;
+  blogStatus: string;
+  url:string;
+  blogImage?: File | string; 
+}
+export interface CreateUserData {
+  email: string;
+  username: string;
+  password: string;
+  confirmPassword:string;
+}
+
+export interface CreateUser {
+  data: CreateUserData;
+}
+export interface UserFormState {
+  email: string;
+  userName: string;
+  password: string;
+  confirmPassword:string;
+}
+export interface UpdateUser {
   _id: string;
   userName: string;
   email: string;
-  course: string;
-  role: string;
-  memberImage?: File | string; // Adjust this based on how the image is handled
 }
 
-// export interface Blog extends UpdateBlogs {
-//   id:string;
-// }
+export interface User extends UpdateUser {
+  id:string;
+}
 
-  export interface Blog {
+  export interface User {
     _id:string;
     id: string;
-    blogName: string;
-    blogStatus: string;
-    blogDescription: string;
-    url:string;
-    blogImage?: string; // Assuming image is a URL or similar
+    email: string;
+    userName: string;
+    role:string;
+    password:string;
+    confirmpassword:string;
+
   }
-  
