@@ -6,7 +6,7 @@
             <div class="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
                <h1 class="text-2xl text-blue-600 font-black">Franklin.</h1>
 
-                <p class="text-base leading-relaxed text-gray-600 mt-7">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
+                <p class="text-base leading-relaxed text-gray-600 mt-7"> i'm full-stack web developer,i can make beautiful project you can.</p>
 
                 <ul class="flex items-center space-x-3 mt-9">
                     <li>
