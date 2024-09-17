@@ -11,19 +11,11 @@
                   class="grid items-center max-w-4xl grid-cols-2 mx-auto mt-12 md:mt-20 md:grid-cols-4 gap-x-10 gap-y-16">
                   <div v-for="item in campany">
                       <div>
-                          <img class="object-contain w-full h-6 mx-auto" :src="item.logo" alt="" />
+                          <img class="object-contain w-full mx-auto" :src="item.logo" alt="" />
                       </div>
                   </div>
 
               </div>
-
-              <div class="flex items-center justify-center mt-10 space-x-3 md:hidden">
-                  <div class="w-2.5 h-2.5 rounded-full bg-blue-600 block"></div>
-                  <div class="w-2.5 h-2.5 rounded-full bg-gray-300 block"></div>
-                  <div class="w-2.5 h-2.5 rounded-full bg-gray-300 block"></div>
-              </div>
-
-              <p class="mt-10 text-base text-center text-gray-500 md:mt-20">and, 1000+ more companies</p>
           </div>
       </section>
 
@@ -33,41 +25,18 @@
 <script lang="ts" setup>
 const campany = [
   {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-1.png"
+      logo: "https://amarebe.com/wp-content/uploads/2021/04/Alight-Rwanda.png"
   },
   {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-2.png"
+      logo: "https://wekraft.org/static/media/craftlogo.a566dde98854d8422958.jpeg"
   },
   {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-3.png"
+      logo: "https://www.rootfoundation.org.rw/wp-content/uploads/2020/09/rflogo.png"
   },
   {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-4.png"
+      logo: "https://github.com/KAYITARES/KUHI/blob/main/src/assets/KUHI.png?raw=true"
   },
-  {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-5.png"
-  },
-  {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-6.png"
-  },
-  {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-7.png"
-  },
-  {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-8.png"
-  },
-  {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-9.png"
-  },
-  {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-10.png"
-  },
-  {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-11.png"
-  },
-  {
-      logo: "https://cdn.rareblocks.xyz/collection/celebration/images/logos/3/logo-12.png"
-  }
+  
 ]
 </script>
 

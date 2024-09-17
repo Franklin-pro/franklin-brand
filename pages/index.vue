@@ -6,7 +6,7 @@
  <Experience/>
  <Blogs/>
  <Contactme/>
- <Footer/>
+
   </div>
 </template>
 

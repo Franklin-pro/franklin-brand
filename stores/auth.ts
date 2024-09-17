@@ -1,17 +1,18 @@
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import type { UserFormState,User, UpdateUser,Login } from '~/types';
+import type { UserFormState, Login, User, UpdateUser } from '~/types';
 
 interface ApiResponse<T> {
   message: string;
   data: T;
-  datas:T;
+  datas: T;
 }
 
-
-export const useStudentStore = defineStore('students', () => {
-  const members = ref<User[]>([]);
+export const useAuthStore = defineStore('users', () => {
+  const users = ref<User[]>([]);
+  
+  const currentUser = ref<User | null>(null); 
   const router = useRouter();
   const user = ref<User | null>(null);
   const token = ref<string | null>(null);
@@ -33,47 +34,60 @@ export const useStudentStore = defineStore('students', () => {
       localStorage.removeItem('user');
     }
   };
+  const setCurrentMember = (user: User) => {
+    currentUser.value = user;
+  };
+
   const fetchUsers = async () => {
     try {
-      const response = await axios.get<ApiResponse<User[]>>('https://realme-backend.onrender.com/user');
-      members.value = response.data.datas;
+      const response = await axios.get<ApiResponse<User[]>>('https://root-found-bn.onrender.com/v1/member');
+      users.value = response.data.datas;
     } catch (error) {
-      console.error('Failed to fetch members', error);
+      console.error('Failed to fetch user', error);
     }
   };
 
-  const createAccount = async (data: UserFormState) => {
+  const fetchUser = async (id: string): Promise<User> => {
     try {
-      const formData = new FormData();
-      if (data.studentReport) {
-        formData.append('studentReport', data.studentReport);
-      }
-      formData.append('firstName', data.firstName);
-      formData.append('lastName', data.lastName);
-      formData.append('age', data.age);
-      formData.append('sex', data.sex);
-      formData.append('grade', data.grade);
-
-      const response = await axios.post<ApiResponse<User>>('https://realme-backend.onrender.com/user', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      members.value.push(response.data.data);
-      alert(response.data.message);
-      router.push('/Member-Dashboard/View-Students');
+      const response = await axios.get<ApiResponse<User>>(`https://root-found-bn.onrender.com/v1/member/${id}`);
+     
+      return response.data.datas; 
     } catch (error) {
-      console.error('Failed to create member:', error);
+      console.error('Failed to fetch member', error);
+      throw error; 
     }
   };
   
+  
+  const createAccount = async (data: UserFormState) => {
+    try {
+      const response = await axios.post<ApiResponse<User>>('http://localhost:3030/v1/user', data);
+      if (response.data.datas) {
+        users.value.push(response.data.datas);
+        alert(response.data.message || 'Account created successfully!');
+        window.location.reload()
+      } else {
+        alert(response.data.message || 'An error occurred while creating the account.');
+      }
+    } catch (error) {
+
+      if (axios.isAxiosError(error) && error.response) {
+        const errorMessage = error.response.data.message || 'An error occurred while creating the account.';
+        alert(errorMessage);
+      } else {
+        alert('An unexpected error occurred.');
+      }
+      console.error('Failed to create account', error);
+    }
+  };
+  
+
   const updateUser = async (id: string, data: UpdateUser) => {
     try {
-      const response = await axios.put<ApiResponse<User>>(`https://realme-backend.onrender.com/user/${id}`, data);
-      const index = members.value.findIndex(member => member.id === id);
+      const response = await axios.put<ApiResponse<User>>(`https://root-found-bn.onrender.com/v1/member/${id}`, data);
+      const index = users.value.findIndex(user => user.id === id);
       if (index !== -1) {
-        members.value[index] = response.data.data;
+        users.value[index] = response.data.data;
       }
       alert(response.data.message);
     } catch (error) {
@@ -81,76 +95,64 @@ export const useStudentStore = defineStore('students', () => {
     }
   };
 
+
+
   const deleteUser = async (id: string) => {
     try {
-      const response = await axios.delete<ApiResponse<null>>(`https://realme-backend.onrender.com/user/${id}`);
-      members.value = members.value.filter(member => member.id !== id);
+      const response = await axios.delete<ApiResponse<null>>(`https://root-found-bn.onrender.com/v1/member/${id}`);
+    users.value = users.value.filter(user => user.id !== id);
       alert(response.data.message);
     } catch (error) {
-      console.error('Failed to delete member', error);
+      console.error('Failed to delete user', error);
     }
   };
 
-  const signIn = async (data: Login) => {
+  const login = async (data: Login) => {
     const validatePassword = (password: string) => password.length >= 8;
-  
+
     if (!validatePassword(data.password)) {
       alert('Password must be at least 8 characters long.');
       return;
     }
-  
+
     try {
-      const response = await fetch("https://realme-backend.onrender.com/users/login", {
+      const response = await fetch('http://localhost:3030/v1/user/login', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
+
       const result = await response.json();
-  
+
       if (result.token) {
         setToken(result.token);
+        
+        if (result.data?.user) {
+          setUser(result.data.user);
+
+          const redirectPath = result.data.user.role === 'admin' ? '/Dashboard/admin/' : '/';
+          await router.replace(redirectPath);
+          return result.data.user;
+        } else {
+          throw new Error('User data not found in response');
+        }
       } else {
         throw new Error('Token not found in response');
       }
-  
-      if (result.data && result.data.user) {
-        setUser(result.data.user);
-        alert('Login successful');
-  
-        if (result.data.user.role === 'admin') {
-          await router.replace('/Dashboard/members/');
-        } else {
-          await router.replace('/member-dashboard/member');
-        }
-        return result.data.user;
-      } else {
-        throw new Error('User data not found in response');
-      }
-    } catch (error: any) {
-      if (error.message.includes('401')) {
-        alert('Invalid email or password. Please try again.');
-      } else {
-        setToken(null);
-        setUser(null);
-  
-        console.error('Failed to sign in:', error);
-        alert('An error occurred during login. Please try again later.');
-      }
-      throw error;
+    } catch (error) {
+      // alert('Login failed. Please check your credentials and try again. ❌');
     }
   };
-  
-  const logout = async() =>{
-    setUser(null);
-    setToken(null);
-    await router.push('/login')
-  }
-  return { members,signIn,logout, fetchUsers, createAccount, updateUser, deleteUser };
+
+const logout = async ()=>{
+setUser(null)
+setToken(null)
+await router.push('/loginAccount')
+}
+  return { users, user, token, currentUser, fetchUser, login,fetchUsers, createAccount,logout, updateUser, deleteUser };
 });

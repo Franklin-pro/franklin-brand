@@ -1,12 +1,6 @@
 <template>
   <div>
-<Navbar/>
-  </div>
-  <div>
-    <slot />
-  </div>
-  <div>
-    <Footer/>
+    <Contactme/>
   </div>
 </template>
 

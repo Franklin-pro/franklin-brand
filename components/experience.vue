@@ -18,10 +18,10 @@
   
               <div>
                   <h3 class="font-bold text-7xl">
-                      <span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-blue-600"> 221 </span>
+                      <span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-blue-600">4 </span>
                   </h3>
-                  <p class="mt-4 text-xl font-medium text-gray-900">Projects delivered</p>
-                  <p class="text-base mt-0.5 text-gray-500">In last 3 years</p>
+                  <p class="mt-4 text-xl font-medium text-gray-900">Projects delivered in my self</p>
+                  <p class="text-base mt-0.5 text-gray-500">In last 1 years</p>
               </div>
   
               <div>
