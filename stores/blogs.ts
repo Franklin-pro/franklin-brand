@@ -64,7 +64,7 @@ export const useBlogStore = defineStore('blogs', () => {
 
       blogs.value.push(response.data.data);
       alert(response.data.message);
-      router.push('/');
+      router.push('/Dashboard/createBlogs');
     } catch (error) {
       console.error('Failed to create blog:', error);
     }

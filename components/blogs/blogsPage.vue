@@ -3,11 +3,10 @@
     <section class="py-10 bg-gray-50 sm:py-16 lg:py-24">
       <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="flex justify-between">
-          <div class="flex items-center justify-between gap-5 lg:text-left py-4">
+          <div class="flex max-sm:flex-col items-center justify-between gap-5 lg:text-left py-4">
             <div>
               <h2 class="text-3xl font-bold leading-tight text-blue-500 sm:text-4xl lg:text-5xl">Our Blogs</h2>
-              <p class="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600 lg:mx-0">Amet minim mollit non
-                deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis.</p>
+              <p class="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600 lg:mx-0">my all blogs i posted you can know me better.</p>
             </div>
             <div>
               <div class="mt-2.5 relative">
@@ -47,7 +46,7 @@
                 </a>
               </div>
             </div>
-            <template v-else>
+            <template v-else-if="filteredBlogs">
               <div v-for="n in 6" :key="n" class="p-5 bg-white rounded-xl">
                 <div class="relative lg:mb-12">
                   <USkeleton class="h-[300px] w-[400px]" :ui="{ rounded: 'rounded-md' }" />
@@ -60,6 +59,9 @@
                 </div>
               </div>
             </template>
+            <div v-else>
+<h1>no data here</h1>
+            </div>
           </div>
         </div>
 
