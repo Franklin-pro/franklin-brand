@@ -59,13 +59,13 @@ const items = ref([
   {
     label: "Contact Us",
     icon: "i-heroicons-chat-bubble-left-ellipsis",
-    path:"contactme"
+    path:"/contactme"
   },
 
   {
     label: "Blogs",
     icon: "i-heroicons-bookmark",
-    path:"blogs/blogs"
+    path:"/blogs/blogs"
   },
 ]);
 </script>

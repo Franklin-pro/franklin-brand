@@ -50,7 +50,8 @@
       </div>
 
       <div v-if="showForm" class="w-1/2 px-4">
-        <UpdateBlogs :blog="selectedMember" v-if="selectedMember" @close="closeCard" />
+        <BlogsUpdateBlogs  :blog="selectedMember" v-if="selectedMember" @close="closeCard"/>
+        <!-- <UpdateBlogs /> -->
       </div>
     </div>
   </div>
