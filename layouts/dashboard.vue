@@ -12,13 +12,14 @@
         </NuxtLink>
         <div>
           <div @click="toggleDropdown" class="cursor-pointer py-2">
-            <span
+            <NuxtLink
+            to="/Dashboard/users"
               class="font-semibold py-1 px-2 flex items-center justify-between w-full transition-colors duration-700 ease-in-out"
               :class="colorMode === 'light' ? 'hover:bg-gray-200 rounded-lg' : 'hover:bg-gray-500'">
               <span class="flex items-center gap-4">
                 <UIcon name="heroicons-user-group" />Users
               </span>
-            </span>
+            </NuxtLink>
           </div>
         </div>
 

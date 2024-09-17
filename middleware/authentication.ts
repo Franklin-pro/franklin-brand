@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     const user = $auth.user;
   
     if (!user) {
-      return navigateTo('/login');
+      return navigateTo('/loginAccount');
     }
   
     const { path } = to;

@@ -17,8 +17,8 @@ export const useMessageStore = defineStore('messages', () => {
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get<ApiResponse<Message[]>>('https://root-found-bn.onrender.com/v1/messages');
-      messages.value = response.data.datas;
+      const response = await axios.get<ApiResponse<Message[]>>('https://realme-backend.onrender.com/v1/messages');
+      messages.value = response.data.data;
     } catch (error) {
       console.error('Failed to fetch messages', error);
     }
@@ -26,7 +26,7 @@ export const useMessageStore = defineStore('messages', () => {
 
   const createMessage = async (data: MessageFormState) => {
     try {
-      const response = await axios.post<ApiResponse<Message>>('https://root-found-bn.onrender.com/v1/messages', data);
+      const response = await axios.post<ApiResponse<Message>>('https://realme-backend.onrender.com/v1/messages', data);
       messages.value.push(response.data.datas);
       // alert(response.data.message);
     } catch (error) {
@@ -37,7 +37,7 @@ export const useMessageStore = defineStore('messages', () => {
 
   const deleteMessage = async (id: string) => {
     try {
-      const response = await axios.delete<ApiResponse<null>>(`https://root-found-bn.onrender.com/v1/messages/${id}`);
+      const response = await axios.delete<ApiResponse<null>>(`https://realme-backend.onrender.com/v1/messages/${id}`);
       messages.value = messages.value.filter(message => message.id !== id);
       alert(response.data.message);
     } catch (error) {

@@ -27,8 +27,8 @@ export const useBlogStore = defineStore('blogs', () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get<ApiResponse<Blogs[]>>('https://root-found-bn.onrender.com/v1/blogs');
-      blogs.value = response.data.datas;
+      const response = await axios.get<ApiResponse<Blogs[]>>('https://realme-backend.onrender.com/v1/blogs');
+      blogs.value = response.data.data;
     } catch (error) {
       console.error('Failed to fetch blogs', error);
     }
@@ -36,9 +36,9 @@ export const useBlogStore = defineStore('blogs', () => {
 
   const fetchBlog = async (id: string): Promise<Blogs> => {
     try {
-      const response = await axios.get<ApiResponse<Blogs>>(`https://root-found-bn.onrender.com/v1/blogs/${id}`);
+      const response = await axios.get<ApiResponse<Blogs>>(`https://realme-backend.onrender.com/v1/blogs/${id}`);
      
-      return response.data.datas; 
+      return response.data.data; 
     } catch (error) {
       console.error('Failed to fetch blog', error);
       throw error; 
@@ -56,7 +56,7 @@ export const useBlogStore = defineStore('blogs', () => {
       formData.append('blogStatus', data.blogStatus);
       formData.append('blogDescription', data.blogDescription);
 
-      const response = await axios.post<ApiResponse<Blogs>>('https://root-found-bn.onrender.com/v1/blogs/', formData, {
+      const response = await axios.post<ApiResponse<Blogs>>('https://realme-backend.onrender.com/v1/blogs/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -72,7 +72,7 @@ export const useBlogStore = defineStore('blogs', () => {
 
   const updateBlog = async (id: string, data: UpdateBlog) => {
     try {
-      const response = await axios.put<ApiResponse<Blogs>>(`https://root-found-bn.onrender.com/v1/blogs/${id}`, data);
+      const response = await axios.put<ApiResponse<Blogs>>(`https://realme-backend.onrender.com/v1/blogs/${id}`, data);
       const index = blogs.value.findIndex(blog => blog.id === id);
       if (index !== -1) {
         blogs.value[index] = response.data.data;
@@ -87,7 +87,7 @@ export const useBlogStore = defineStore('blogs', () => {
 
   const deleteBlog = async (id: string) => {
     try {
-      const response = await axios.delete<ApiResponse<null>>(`https://root-found-bn.onrender.com/v1/blogs/${id}`);
+      const response = await axios.delete<ApiResponse<null>>(`https://realme-backend.onrender.com/v1/blogs/${id}`);
       blogs.value = blogs.value.filter(blog => blog.id !== id);
       alert(response.data.message);
     } catch (error) {

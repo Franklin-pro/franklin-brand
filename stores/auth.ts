@@ -40,8 +40,8 @@ export const useAuthStore = defineStore('users', () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get<ApiResponse<User[]>>('https://root-found-bn.onrender.com/v1/member');
-      users.value = response.data.datas;
+      const response = await axios.get<ApiResponse<User[]>>('https://realme-backend.onrender.com/v1/user');
+      users.value = response.data.data;
     } catch (error) {
       console.error('Failed to fetch user', error);
     }
@@ -49,7 +49,7 @@ export const useAuthStore = defineStore('users', () => {
 
   const fetchUser = async (id: string): Promise<User> => {
     try {
-      const response = await axios.get<ApiResponse<User>>(`https://root-found-bn.onrender.com/v1/member/${id}`);
+      const response = await axios.get<ApiResponse<User>>(`https://realme-backend.onrender.com/v1/user/${id}`);
      
       return response.data.datas; 
     } catch (error) {
@@ -61,7 +61,7 @@ export const useAuthStore = defineStore('users', () => {
   
   const createAccount = async (data: UserFormState) => {
     try {
-      const response = await axios.post<ApiResponse<User>>('http://localhost:3030/v1/user', data);
+      const response = await axios.post<ApiResponse<User>>('https://realme-backend.onrender.com/v1/user', data);
       if (response.data.datas) {
         users.value.push(response.data.datas);
         alert(response.data.message || 'Account created successfully!');
@@ -84,7 +84,7 @@ export const useAuthStore = defineStore('users', () => {
 
   const updateUser = async (id: string, data: UpdateUser) => {
     try {
-      const response = await axios.put<ApiResponse<User>>(`https://root-found-bn.onrender.com/v1/member/${id}`, data);
+      const response = await axios.put<ApiResponse<User>>(`https://realme-backend.onrender.com/v1/user/${id}`, data);
       const index = users.value.findIndex(user => user.id === id);
       if (index !== -1) {
         users.value[index] = response.data.data;
@@ -99,7 +99,7 @@ export const useAuthStore = defineStore('users', () => {
 
   const deleteUser = async (id: string) => {
     try {
-      const response = await axios.delete<ApiResponse<null>>(`https://root-found-bn.onrender.com/v1/member/${id}`);
+      const response = await axios.delete<ApiResponse<null>>(`https://realme-backend.onrender.com/v1/user/${id}`);
     users.value = users.value.filter(user => user.id !== id);
       alert(response.data.message);
     } catch (error) {
@@ -116,7 +116,7 @@ export const useAuthStore = defineStore('users', () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3030/v1/user/login', {
+      const response = await fetch('https://realme-backend.onrender.com/v1/user/login', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
