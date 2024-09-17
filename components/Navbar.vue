@@ -65,7 +65,7 @@ const items = ref([
   {
     label: "Blogs",
     icon: "i-heroicons-bookmark",
-    path:"blogs"
+    path:"blogs/blogs"
   },
 ]);
 </script>
