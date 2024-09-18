@@ -5,7 +5,7 @@
           <div class="flex items-end justify-between">
               <div class="flex-1 text-center lg:text-left py-4">
                   <h2 class="text-3xl font-bold leading-tight text-blue-500 sm:text-4xl lg:text-5xl">Contact Us</h2>
-                  <p class="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600 lg:mx-0">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis.</p>
+                  <p class="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600 lg:mx-0">You can hire me if you're interested, or you can contact me here with any suggestions you may have.</p>
               </div>
           </div>
   
@@ -27,11 +27,11 @@
                   </div>
   
                   <div class="overflow-hidden bg-white rounded-xl">
-                      <div class="p-6">
+                      <div class="p-6 max-sm:p-3">
                           <svg class="flex-shrink-0 w-10 h-10 mx-auto text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                           </svg>
-                          <p class="mt-6 text-lg font-medium text-gray-900">franklinprogrammer@gmail.com</p>
+                          <p class="mt-6 text-lg max-sm:text-sm font-medium text-gray-900">franklinprogrammer@gmail.com</p>
                       </div>
                   </div>
   
@@ -41,7 +41,7 @@
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                           </svg>
-                          <p class="mt-6 text-lg font-medium leading-relaxed text-gray-900">8502 Preston Rd. Ingle, Maine 98380, USA</p>
+                          <p class="mt-6 text-lg font-medium leading-relaxed text-gray-900">GATENGA, KK 616 ST, Kigali-Kicukiro, RWANDA</p>
                       </div>
                   </div>
               </div>
