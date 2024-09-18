@@ -1,7 +1,7 @@
 <template>
   <div class="p-5">
     <div class="flex items-center justify-between py-5">
-      <h1 class="font-bold text-2xl text-primary">Members List</h1>
+      <h1 class="font-bold text-2xl text-primary">Users List</h1>
       <UTooltip text="search member...">
         <UInput
         icon="i-heroicons-magnifying-glass-20-solid"
@@ -12,12 +12,6 @@
         v-model="searchQuery"
       />
       </UTooltip>
-        <button class=" w-[20%] bg-orange-500 text-white py-2 rounded hover:bg-orange-600">
-          <UTooltip text="create new member">
-            <a href="/Dashboard/members/createMember">Create New</a>
-          </UTooltip>
-
-        </button>
 
     </div>
 

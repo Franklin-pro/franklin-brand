@@ -5,7 +5,7 @@
         <div class="grid items-center grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-x-20">
             <div class="">
                 <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Franklin <span class="text-blue-500">Developer.</span></h2>
-                <p class="mt-4 text-base leading-relaxed text-gray-600">   i'm full-stack web developer,i can make beautiful project you can
+                <p class="mt-4 text-base leading-relaxed text-gray-600">   i'm full-stack web developer,i can make good website if you are interested you can
                   find Me on github or DM on instagram.</p>
                   <ul class="flex items-center space-x-3 mt-9">
                     <li>
