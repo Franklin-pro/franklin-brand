@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>hello world</h1>
+    <Cards/>
+    <UserManagement/>
   </div>
 </template>
 
