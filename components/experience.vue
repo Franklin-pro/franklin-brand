@@ -4,7 +4,7 @@
       <div class="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
           <div class="max-w-2xl mx-auto text-center">
               <h2 class="text-3xl font-bold leading-tight text-blue-600 sm:text-4xl lg:text-5xl">Numbers tell our story</h2>
-              <p class="mt-3 text-xl leading-relaxed text-gray-600 md:mt-8">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis.</p>
+              <p class="mt-3 text-xl leading-relaxed text-gray-600 md:mt-8">My two years of coding experience, as well as the work I completed for clients.</p>
           </div>
   
           <div class="grid grid-cols-1 gap-8 mt-10 text-center lg:mt-24 sm:gap-x-8 md:grid-cols-3">
