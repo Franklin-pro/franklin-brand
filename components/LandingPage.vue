@@ -6,9 +6,7 @@
                     <div class="">
                         <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Franklin <span
                                 class="text-blue-500">Developer.</span></h2>
-                        <p class="mt-4 text-base leading-relaxed text-gray-600"> i'm full-stack web developer,i can make
-                            good website if you are interested you can
-                            find Me on github or DM on instagram.</p>
+                        <p class="mt-4 text-base leading-relaxed text-gray-600">As a full-stack web developer, I am capable of creating a top-notch website. If you are interested, please contact me on 👇 </p>
                         <ul class="flex items-center space-x-3 mt-9">
                             <li>
                                 <a href="https://www.instagram.com/g_wayne_1/?hl=en" title=""
