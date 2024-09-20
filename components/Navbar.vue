@@ -15,9 +15,34 @@
               </div>
             </div>
           </div>
-          <a href="/loginAccount" title=""
-            class="items-center justify-center hidden px-4 py-3 ml-10 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md lg:inline-flex hover:bg-blue-700 focus:bg-blue-700"
-            role="button">Login-In</a>
+          <div class="flex items-center gap-10">
+            <div class="flex items-center gap-3">
+              <UTooltip :text="userName">
+                <UPopover>
+                <div class=" flex items-center gap-4">
+                    <div class="w-[40px] relative">
+                      <img src="../assets/iconxx.png" alt="" class="w-full object-coverrounded-full  rounded-full ">
+                    </div>
+                 
+                  <h1 class="text-xl text-blue-500 font-bold">{{userName}}</h1>
+              </div>
+
+              <template #panel>
+      <div class="p-4">
+        <p class="text-gray-500 pb-3">{{ userEmail }}</p>
+        <a href="/loginAccount" title=""
+          @click="logout"
+            class="items-center justify-center hover:text-red-500 hidden text-base font-semibold transition-all duration-200border border-transparent rounded-md lg:inline-flex focus:bg-blue-700"
+            role="button">Log-Out <UIcon name="i-heroicons-arrow-right-start-on-rectangle" class="text-xl"/></a>
+      </div>
+    </template>
+              </UPopover>
+              </UTooltip>
+            
+            
+            </div>
+          </div>
+     
         </nav>
         <nav class="pt-4 pb-6 bg-white border border-gray-200 rounded-md shadow-md lg:hidden">
           <div v-for="item in items" class="flow-root">
@@ -32,8 +57,9 @@
 
           <div class="px-6 mt-6">
             <a href="/loginAccount" title=""
-              class="inline-flex justify-center px-4 py-3 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md tems-center hover:bg-blue-700 focus:bg-blue-700"
-              role="button">Login-In </a>
+            @click="logout"
+              class="inline-flex justify-center px-4 py-3 text-base font-semibold text-white transition-all duration-200 bg-red-600 border border-transparent rounded-md tems-center hover:bg-blue-700 focus:bg-blue-700"
+              role="button">Log-Out </a>
           </div>
         </nav>
       </div>
@@ -49,7 +75,7 @@ const items = ref([
   {
     label: "Home",
     icon: "i-heroicons-home",
-    path:"/"
+    path:"/franklin"
   },
   {
     label: "About Us",
@@ -68,6 +94,29 @@ const items = ref([
     path:"/blogs/blogs"
   },
 ]);
+
+const userStore = useAuthStore()
+
+const isClient = typeof window !== 'undefined'
+
+const userName = computed(() => {
+  if (isClient) {
+    const user = JSON.parse(localStorage.getItem("user") || '{}')
+    return user ? user.userName : ''
+  }
+  return ''
+})
+const userEmail = computed(() => {
+  if (isClient) {
+    const user = JSON.parse(localStorage.getItem("user") || '{}')
+    return user ? user.email : ''
+  }
+  return ''
+})
+const userAuth = useAuthStore()
+const logout = async() =>{
+  await userAuth.logout()
+}
 </script>
 
 <style scoped>

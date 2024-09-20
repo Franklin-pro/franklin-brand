@@ -120,6 +120,9 @@
       message: '',
   
     });
+    definePageMeta({
+        middleware:'authentication'
+    })
   const isLoading =ref(false)
   const alertMessage = ref()
     const messageStore = useMessageStore();

@@ -66,6 +66,7 @@ export const useAuthStore = defineStore('users', () => {
         users.value.push(response.data.datas);
         alert(response.data.message || 'Account created successfully!');
         window.location.reload()
+        router.push('/')
       } else {
         alert(response.data.message || 'An error occurred while creating the account.');
       }
