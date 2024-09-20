@@ -68,7 +68,6 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted } from 'vue';
 
-// Define types for the state objects
 const likeCounts = ref<{ [key: string]: number }>({});
 const dislikeCounts = ref<{ [key: string]: number }>({});
 const likedBlogs = ref<{ [key: string]: boolean }>({});
@@ -96,7 +95,6 @@ const saveInteractionData = () => {
   localStorage.setItem('dislikedBlogs', JSON.stringify(dislikedBlogs.value));
 };
 
-// Handle like functionality
 const handleLike = (blogId: string) => {
   if (!likedBlogs.value[blogId] && !dislikedBlogs.value[blogId]) {
     likeCounts.value[blogId] = (likeCounts.value[blogId] || 0) + 1;
@@ -107,7 +105,6 @@ const handleLike = (blogId: string) => {
   }
 };
 
-// Handle dislike functionality
 const handleDislike = (blogId: string) => {
   if (!likedBlogs.value[blogId] && !dislikedBlogs.value[blogId]) {
     dislikeCounts.value[blogId] = (dislikeCounts.value[blogId] || 0) + 1;
@@ -118,7 +115,6 @@ const handleDislike = (blogId: string) => {
   }
 };
 
-// Filtered blogs based on search query
 const filteredBlogs = computed(() => {
   if (!blogStore.blogs) return [];
   return blogStore.blogs
@@ -126,7 +122,6 @@ const filteredBlogs = computed(() => {
     .reverse();
 });
 
-// On mount, fetch blogs and load interaction data
 onMounted(async () => {
   await blogStore.fetchBlogs();
   loadInteractionData();
@@ -135,5 +130,5 @@ onMounted(async () => {
 
 
 <style scoped>
-/* Add any custom styling here */
+
 </style>
