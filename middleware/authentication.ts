@@ -1,21 +1,17 @@
+export default defineNuxtRouteMiddleware(async (to, from) => {
+  const authStore = useAuthStore();
 
-export default defineNuxtRouteMiddleware((to, from) => {
-    const  $auth  = useAuthStore();
+  const user = authStore.user;
 
-    const user = $auth.user;
-  
-    if (!user) {
-      return navigateTo('/loginAccount');
-    }
-  
-    const { path } = to;
-  
-    if (path.startsWith('/dashboard/admin') && user.role !== 'admin') {
-      return navigateTo('/loginAccount');
-    }
-  
-    if (path.startsWith('member-dashboard/member') && user.role !== 'member' && user.role !== 'admin') {
-      return navigateTo('/loginAccount');
-    }
-  });
-  
+  if (!user) {
+    return navigateTo('/loginAccount');
+  }
+
+  if (to.path.startsWith('/dashboard/admin') && user.role !== 'admin') {
+    return navigateTo('/');
+  }
+
+  if (to.path.startsWith('/contactme') && !['user', 'admin'].includes(user.role)) {
+    return navigateTo('/');
+  }
+});

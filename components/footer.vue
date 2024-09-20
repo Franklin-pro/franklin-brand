@@ -69,7 +69,7 @@
                 <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Help</p>
                 <div v-for="item in items" class="flex items-center space-x-3 ">
               <div class="flex flex-col mt-6 space-y-4">
-                <a href="#" title=""
+                <a href="/helps" title=""
                 class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                   {{ item.pravicy }} </a>
               </div>
@@ -91,7 +91,7 @@
 
         <hr class="mt-16 mb-10 border-gray-200" />
 
-        <p class="text-sm text-center text-gray-600">copyright &copy; {{ new Date().getFullYear() }}, All Rights Reserved by Postcraft</p>
+        <p class="text-sm text-center text-gray-600">copyright &copy; {{ new Date().getFullYear() }}, All Rights Reserved by Franklin</p>
     </div>
 </section>
 
@@ -104,7 +104,7 @@ import { ref } from 'vue';
 const items = ref([
   {
     label: "Home",
-    pravicy:'policy',
+    pravicy:'helps',
     icon: "i-heroicons-home",
   },
   {

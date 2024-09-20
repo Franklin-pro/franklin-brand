@@ -13,7 +13,9 @@
 <script lang="ts" setup>
 import Contactme from '~/components/contactme.vue';
 import Experience from '~/components/experience.vue';
-
+ definePageMeta({
+  middleware:'authentication'
+ })
 
 </script>
 

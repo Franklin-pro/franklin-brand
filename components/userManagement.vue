@@ -74,14 +74,6 @@ definePageMeta({
 const items = (row: any) => [
   [
     {
-      label: 'Edit User',
-      icon: 'i-heroicons-pencil-square-20-solid',
-      click: () => {
-        selectedMember.value = row;
-        showForm.value = true;
-      }
-    },
-    {
       label: 'Delete User',
       icon: 'i-heroicons-trash',
       click: async () => {

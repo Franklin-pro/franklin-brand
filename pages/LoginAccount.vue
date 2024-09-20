@@ -26,8 +26,9 @@
                   <label for="" class="text-base font-medium text-gray-900"> Password </label>
                 </div>
                 <div class="mt-2.5 relative">
-                  <input type="password" name="" id="" placeholder="Enter Password" v-model="state.password"
-                    class="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600" />
+                  <input :type="isPasswordVisible ? 'text' : 'password'" name="" id="" placeholder="Enter Password" v-model="state.password"
+                    class="block relative w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600" />
+                    <UIcon :name="isPasswordVisible ? 'i-heroicons-eye' : 'i-heroicons-eye-slash'" @click="togglePasswordVisibility" class="absolute top-5 right-4"/>
                 </div>
               </div>
 
@@ -83,9 +84,18 @@ const state = reactive({
   userName: ''
 });
 
+definePageMeta({
+  layout:'auth'
+})
+
 const isLoading = ref(false);
 const errorMesage = ref()
 const successMessage = ref()
+const isPasswordVisible = ref(false);
+
+const togglePasswordVisibility = () => {
+  isPasswordVisible.value = !isPasswordVisible.value;
+};
 
 const validate = (state: any): FormError[] => {
   const errors = [];
