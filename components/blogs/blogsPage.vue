@@ -51,9 +51,21 @@
             </div>
             <template v-else-if="filteredBlogs.length === 0">
               <div>
-                <h1 class="text-center text-gray-600">No blogs found</h1>
+                <div class="relative lg:mb-12">
+            <USkeleton class="h-[300px] w-[400px]" :ui="{ rounded: 'rounded-md' }" />
+          </div>
+          
+          <div class="space-y-4">
+            <USkeleton class="h-8 w-[300px]" />
+            <USkeleton class="h-4 w-[250px]" />
+            <USkeleton class="h-4 w-[280px]" />
+            <USkeleton class="h-4 w-[120px]" />
+          </div>
               </div>
             </template>
+            <div v-else>
+              <span>no blogs found</span>
+            </div>
           </div>
         </div>
       </div>
@@ -125,5 +137,4 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-/* Customize styles if necessary */
 </style>
