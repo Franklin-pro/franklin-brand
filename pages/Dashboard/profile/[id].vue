@@ -31,7 +31,10 @@ import { ref, onMounted } from 'vue';
 import type { User } from '~/types';
 
 const user = ref<User | null>(null);
-
+definePageMeta({
+  layout:'dashboard',
+  middleware:'authentication'
+})
 onMounted(() => {
   const storedUser = localStorage.getItem('user');
   if (storedUser) {
