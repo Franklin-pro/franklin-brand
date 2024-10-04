@@ -1,30 +1,28 @@
 <template>
   <div>
-    <div ref="mapContainer" class="map"></div>
+    <div ref="mapContainer" class="map w-1/2"></div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { onMounted, ref } from 'vue';
 import { useNuxtApp } from '#app';
 
 const mapContainer = ref(null);
 
 onMounted(() => {
-  const { $loadGoogleMaps } = useNuxtApp(); // Use the plugin function
+  const { $loadGoogleMaps } = useNuxtApp();
 
   $loadGoogleMaps().then((google) => {
-    // Initialize the Google Map targeting OKG MUSIC
     const map = new google.maps.Map(mapContainer.value, {
-      center: { lat: -1.9738659803894874, lng: 30.10960735108956 },  // Replace with OKG MUSIC's actual coordinates
+      center: { lat: -1.98211, lng: 30.09369 }, 
       zoom: 16,
     });
 
-    // Optionally, add a marker at OKG MUSIC
     new google.maps.Marker({
-      position: { lat:-1.9738659803894874, lng: 30.10960735108956 },  // Replace with OKG MUSIC's actual coordinates
+      position: { lat:-1.98211, lng: 30.09369 }, 
       map,
-      title: 'OKG MUSIC',
+      title: 'Franklin programmer',
     });
   }).catch((error) => {
     console.error('Google Maps failed to load', error);
