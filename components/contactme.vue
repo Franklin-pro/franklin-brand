@@ -47,6 +47,9 @@
               </div>
   
               <div class="mt-6 overflow-hidden bg-white rounded-xl">
+                <div>
+                    <Map/>
+                </div>
                   <div class="px-6 py-12 sm:p-12">
                       <h3 class="text-3xl font-semibold  text-center text-gray-900">Send us a message</h3>
                       <h2 class="text-xl text-green-600">{{ alertMessage }}</h2>
@@ -100,9 +103,6 @@
                       </form>
                   </div>
               </div>
-          </div>
-          <div>
-            <Map/>
           </div>
       </div>
   </section>
