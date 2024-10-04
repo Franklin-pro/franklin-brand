@@ -6,6 +6,7 @@
  <Experience/>
  <Blogs/>
  <Contactme/>
+ <!-- <Map/> -->
 
   </div>
 </template>
@@ -13,6 +14,7 @@
 <script lang="ts" setup>
 import Contactme from '~/components/contactme.vue';
 import Experience from '~/components/experience.vue';
+import Map from '~/components/Map.vue';
  definePageMeta({
   middleware:'authentication'
  })
