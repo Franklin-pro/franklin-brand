@@ -101,6 +101,9 @@
                   </div>
               </div>
           </div>
+          <div>
+            <Map/>
+          </div>
       </div>
   </section>
   
