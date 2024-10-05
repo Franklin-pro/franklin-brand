@@ -15,12 +15,11 @@ onMounted(() => {
 
   $loadGoogleMaps().then((google) => {
     const map = new google.maps.Map(mapContainer.value, {
-      center: { lat: -1.98211, lng: 30.09369 }, 
-      zoom: 16,
+      center: { lat: -1.9824735012760395, lng: 30.093138653201834 }, 
+      zoom: 17,
     });
-
     new google.maps.Marker({
-      position: { lat:-1.98211, lng: 30.09369 }, 
+      position: { lat:-1.9824735012760395, lng: 30.093138653201834 }, 
       map,
       title: 'Franklin programmer',
     });

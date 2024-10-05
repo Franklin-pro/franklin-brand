@@ -69,7 +69,7 @@
                 <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Help</p>
                 <div v-for="item in items" class="flex items-center space-x-3 ">
               <div class="flex flex-col mt-6 space-y-4">
-                <a href="/helps" title=""
+                <a :href="item.path" title=""
                 class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                   {{ item.pravicy }} </a>
               </div>
@@ -105,17 +105,20 @@ const items = ref([
   {
     label: "Home",
     pravicy:'helps',
+    path:"/help",
     icon: "i-heroicons-home",
   },
   {
     label: "About Us",
     pravicy:'Contact-Me',
+    path:"/contactme",
     icon: "i-heroicons-book-open",
   },
-  // {
-  //   label: "Contact Us",
-  //   icon: "i-heroicons-chat-bubble-left-ellipsis",
-  // },
+  {
+    pravicy: "Settings",
+    path:"/settings",
+    icon: "i-heroicons-chat-bubble-left-ellipsis",
+  },
 
   // {
   //   label: "Blogs",
