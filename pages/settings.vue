@@ -125,7 +125,7 @@ const userInfo = ref({
 
 definePageMeta({
   layout:'default',
-  middleware:'authentication'
+//   middleware:'authentication'
 })
 const isEditInfo = ref(false)
 const isEditAddress = ref(false)
