@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import type {Blogs, BlogFormState, UpdateBlog } from '~/types';
+import type { Blogs, BlogFormState, UpdateBlog, Comment } from '~/types';
 
 interface ApiResponse<T> {
   message: string;
@@ -11,6 +11,7 @@ interface ApiResponse<T> {
 
 export const useBlogStore = defineStore('blogs', () => {
   const blogs = ref<Blogs[]>([]);
+  const comment = ref<Comment[]>([])
   const router = useRouter();
   const user = ref<Blogs | null>(null);
 
@@ -95,8 +96,55 @@ export const useBlogStore = defineStore('blogs', () => {
     }
   };
 
+  const handleLike = async (blogId: string) => {
+    try {
+      const response = await axios.post(`https://realme-backend.onrender.com/api/blogs/${blogId}/like`);
+      const updatedBlog = response.data.data;
+      updateBlogInStore(updatedBlog); // Update the blog in the store with the new like count
+    } catch (error) {
+      console.error('Failed to like blog', error);
+    }
+  };
+
+  const handleDislike = async (blogId: string) => {
+    try {
+      const response = await axios.post(`https://realme-backend.onrender.com/api/blogs/${blogId}/dislike`);
+      const updatedBlog = response.data.data;
+      updateBlogInStore(updatedBlog); // Update the blog in the store with the new dislike count
+    } catch (error) {
+      console.error('Failed to dislike blog', error);
+    }
+  };
+
+  // const addComment = async (blogId: string, comment: string) => {
+  //   try {
+  //     const response = await axios.post(`http://localhost:3030/v1/blogs/${blogId}`, { comment });
+  //     const updatedBlog = response.data.data;
+  //     updateBlogInStore(updatedBlog);
+  //   } catch (error) {
+  //     console.error('Failed to post comment', error);
+  //   }
+  // };
+
+  // const fetchComments = async (blogId: string) => {
+  //   try {
+  //     const response = await axios.get<ApiResponse<Comment[]>>(`/v1/blogs/${blogId}`);
+  //     comment.value = response.data.data;
+  //     return comment.value;
+  //   } catch (error) {
+  //     console.error('Failed to fetch comments', error);
+  //     throw error;
+  //   }
+  // };
+
+  const updateBlogInStore = (updatedBlog: Blogs) => {
+    const index = blogs.value.findIndex(blog => blog._id === updatedBlog._id);
+    if (index !== -1) {
+      blogs.value[index] = updatedBlog;
+    }
+  };
 
 
 
-  return { blogs,setBlogs, fetchBlogs, fetchBlog, createBlog, updateBlog, deleteBlog };
+  return { blogs,comment, fetchBlogs, handleLike, handleDislike ,setBlogs, fetchBlog, createBlog, updateBlog, deleteBlog };
 });

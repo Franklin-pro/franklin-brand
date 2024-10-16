@@ -29,6 +29,12 @@
             <p class="mt-6 text-xl font-semibold leading-relaxed text-blue-500">
               {{ blog?.blogStatus }} 
             </p>
+            <div class="flex items-center gap-4 text-xl py-2">
+                  <UIcon name="i-heroicons-hand-thumb-up" class="bg-gray-700" @click="handleLike(blog._id)"/>
+                  <span class="text-gray-700">{{ likeCounts[blog._id] || 0 }}</span>
+                  <UIcon name="i-heroicons-hand-thumb-down" class="bg-black" @click="handleDislike(blog._id)"/>
+                  <span class="text-gray-700">{{ dislikeCounts[blog._id] || 0 }}</span>
+                </div>
           </div>
         </div>
 
@@ -60,7 +66,67 @@ const id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id
 
 const blogStore = useBlogStore();
 const blogId = ref<string>(id); 
-const blog = ref<Blogs | null>(null); 
+const blog = ref<Blogs | null>(null);
+  const likeCounts = ref<{ [key: string]: number }>({});
+const dislikeCounts = ref<{ [key: string]: number }>({});
+const likedBlogs = ref<{ [key: string]: boolean }>({});
+const dislikedBlogs = ref<{ [key: string]: boolean }>({}); 
+
+const loadInteractionData = () => {
+  const storedLikes = localStorage.getItem('likeCounts');
+  const storedDislikes = localStorage.getItem('dislikeCounts');
+  const storedLikedBlogs = localStorage.getItem('likedBlogs');
+  const storedDislikedBlogs = localStorage.getItem('dislikedBlogs');
+  
+  likeCounts.value = storedLikes ? JSON.parse(storedLikes) : {};
+  dislikeCounts.value = storedDislikes ? JSON.parse(storedDislikes) : {};
+  likedBlogs.value = storedLikedBlogs ? JSON.parse(storedLikedBlogs) : {};
+  dislikedBlogs.value = storedDislikedBlogs ? JSON.parse(storedDislikedBlogs) : {};
+};
+
+const saveInteractionData = () => {
+  localStorage.setItem('likeCounts', JSON.stringify(likeCounts.value));
+  localStorage.setItem('dislikeCounts', JSON.stringify(dislikeCounts.value));
+  localStorage.setItem('likedBlogs', JSON.stringify(likedBlogs.value));
+  localStorage.setItem('dislikedBlogs', JSON.stringify(dislikedBlogs.value));
+};
+
+const handleLike = (blogId: string) => {
+  if (likedBlogs.value[blogId]) {
+    // If already liked, remove the like
+    likeCounts.value[blogId] = Math.max((likeCounts.value[blogId] || 1) - 1, 0);
+    likedBlogs.value[blogId] = false;
+  } else {
+    // If disliked, remove the dislike
+    if (dislikedBlogs.value[blogId]) {
+      dislikeCounts.value[blogId] = Math.max((dislikeCounts.value[blogId] || 1) - 1, 0);
+      dislikedBlogs.value[blogId] = false;
+    }
+    // Add the like
+    likeCounts.value[blogId] = (likeCounts.value[blogId] || 0) + 1;
+    likedBlogs.value[blogId] = true;
+  }
+  saveInteractionData();
+};
+
+const handleDislike = (blogId: string) => {
+  if (dislikedBlogs.value[blogId]) {
+    // If already disliked, remove the dislike
+    dislikeCounts.value[blogId] = Math.max((dislikeCounts.value[blogId] || 1) - 1, 0);
+    dislikedBlogs.value[blogId] = false;
+  } else {
+    // If liked, remove the like
+    if (likedBlogs.value[blogId]) {
+      likeCounts.value[blogId] = Math.max((likeCounts.value[blogId] || 1) - 1, 0);
+      likedBlogs.value[blogId] = false;
+    }
+    // Add the dislike
+    dislikeCounts.value[blogId] = (dislikeCounts.value[blogId] || 0) + 1;
+    dislikedBlogs.value[blogId] = true;
+  }
+  saveInteractionData();
+};
+
 
 onMounted(async () => {
   if (blogId.value) {
