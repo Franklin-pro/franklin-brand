@@ -104,3 +104,10 @@ export interface User extends UpdateUser {
     confirmpassword:string;
 
   }
+
+  export interface Comment {
+    _id:string,
+    userId:string
+    userName:string,
+    message:string
+  }

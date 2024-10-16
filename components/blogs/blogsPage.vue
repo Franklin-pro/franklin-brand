@@ -36,10 +36,10 @@
                 </p>
                 <p class="mt-4 text-base text-gray-600 truncate">{{ item.blogDescription }}</p>
                 <div class="flex items-center gap-4 text-xl py-2">
-                  <UIcon name="i-heroicons-hand-thumb-up" @click="handleLike(item._id)" />
-                  <span>{{ likeCounts[item._id] || 0 }}</span>
-                  <UIcon name="i-heroicons-hand-thumb-down" @click="handleDislike(item._id)" />
-                  <span>{{ dislikeCounts[item._id] || 0 }}</span>
+                  <UIcon name="i-heroicons-hand-thumb-up" class="bg-gray-700" @click="handleLike(item._id)"/>
+                  <span class="text-gray-700">{{ likeCounts[item._id] || 0 }}</span>
+                  <UIcon name="i-heroicons-hand-thumb-down" class="bg-black" @click="handleDislike(item._id)"/>
+                  <span class="text-gray-700">{{ dislikeCounts[item._id] || 0 }}</span>
                 </div>
                 <a :href="item._id" class="inline-flex items-center justify-center pb-0.5 mt-5 text-base font-semibold text-blue-600 transition-all duration-200 border-b-2 border-transparent hover:border-blue-600">
                   Continue Reading
@@ -52,19 +52,18 @@
             <template v-else-if="filteredBlogs.length === 0">
               <div>
                 <div class="relative lg:mb-12">
-            <USkeleton class="h-[300px] w-[400px]" :ui="{ rounded: 'rounded-md' }" />
-          </div>
-          
-          <div class="space-y-4">
-            <USkeleton class="h-8 w-[300px]" />
-            <USkeleton class="h-4 w-[250px]" />
-            <USkeleton class="h-4 w-[280px]" />
-            <USkeleton class="h-4 w-[120px]" />
-          </div>
+                  <USkeleton class="h-[300px] w-[400px]" :ui="{ rounded: 'rounded-md' }" />
+                </div>
+                <div class="space-y-4">
+                  <USkeleton class="h-8 w-[300px]" />
+                  <USkeleton class="h-4 w-[250px]" />
+                  <USkeleton class="h-4 w-[280px]" />
+                  <USkeleton class="h-4 w-[120px]" />
+                </div>
               </div>
             </template>
             <div v-else>
-              <span>no blogs found</span>
+              <span>No blogs found</span>
             </div>
           </div>
         </div>
@@ -75,6 +74,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from 'vue';
+import { useBlogStore } from '@/stores/blogs';
 
 const likeCounts = ref<{ [key: string]: number }>({});
 const dislikeCounts = ref<{ [key: string]: number }>({});
@@ -104,23 +104,39 @@ const saveInteractionData = () => {
 };
 
 const handleLike = (blogId: string) => {
-  if (!likedBlogs.value[blogId] && !dislikedBlogs.value[blogId]) {
+  if (likedBlogs.value[blogId]) {
+    // If already liked, remove the like
+    likeCounts.value[blogId] = Math.max((likeCounts.value[blogId] || 1) - 1, 0);
+    likedBlogs.value[blogId] = false;
+  } else {
+    // If disliked, remove the dislike
+    if (dislikedBlogs.value[blogId]) {
+      dislikeCounts.value[blogId] = Math.max((dislikeCounts.value[blogId] || 1) - 1, 0);
+      dislikedBlogs.value[blogId] = false;
+    }
+    // Add the like
     likeCounts.value[blogId] = (likeCounts.value[blogId] || 0) + 1;
     likedBlogs.value[blogId] = true;
-    saveInteractionData();
-  } else {
-    alert('You have already liked or disliked this blog');
   }
+  saveInteractionData();
 };
 
 const handleDislike = (blogId: string) => {
-  if (!likedBlogs.value[blogId] && !dislikedBlogs.value[blogId]) {
+  if (dislikedBlogs.value[blogId]) {
+    // If already disliked, remove the dislike
+    dislikeCounts.value[blogId] = Math.max((dislikeCounts.value[blogId] || 1) - 1, 0);
+    dislikedBlogs.value[blogId] = false;
+  } else {
+    // If liked, remove the like
+    if (likedBlogs.value[blogId]) {
+      likeCounts.value[blogId] = Math.max((likeCounts.value[blogId] || 1) - 1, 0);
+      likedBlogs.value[blogId] = false;
+    }
+    // Add the dislike
     dislikeCounts.value[blogId] = (dislikeCounts.value[blogId] || 0) + 1;
     dislikedBlogs.value[blogId] = true;
-    saveInteractionData();
-  } else {
-    alert('You have already liked or disliked this blog');
   }
+  saveInteractionData();
 };
 
 const filteredBlogs = computed(() => {
@@ -134,7 +150,9 @@ onMounted(async () => {
   await blogStore.fetchBlogs();
   loadInteractionData();
 });
+
 </script>
 
 <style scoped>
+/* Add any custom styling here if needed */
 </style>
