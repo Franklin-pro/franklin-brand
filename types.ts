@@ -52,6 +52,27 @@ export interface Blogs {
   blogImage?: BlogImage | undefined; // Optional BlogImage object
 }
 
+export interface BlogVideo {
+  url: string;
+}
+
+export interface Video {
+  _id: string;
+  id: string;
+  videoTitle: string;
+  videoDescription: string;
+  url: string;
+  video?: BlogVideo | undefined; 
+}
+
+export interface VideoFormState {
+  videoTitle: string;
+  videoDescription: string;
+  url: string;
+  videoLink:string
+  video?: File | { url: string } | null;
+}
+
 export interface BlogFormState {
   blogName: string;
   blogDescription: string;
