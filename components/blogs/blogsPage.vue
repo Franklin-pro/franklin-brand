@@ -19,10 +19,10 @@
 
         <div class="lg:max-w-full">
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 rounded">
-            <div v-if="filteredBlogs.length > 0" v-for="item in filteredBlogs" :key="item.id">
+            <div v-if="filteredBlogs.length > 0" v-for="item in filteredBlogs" :key="item._id">
               <div class="p-5 bg-white rounded-xl">
                 <div class="relative">
-                  <a href="#" title="" class="block aspect-w-4 aspect-h-3">
+                  <a :href="'/blogs/' + item._id" class="block aspect-w-4 aspect-h-3">
                     <img class="object-cover w-full h-full" :src="item.blogImage?.url" alt="" />
                   </a>
                   <div class="absolute top-4 left-4">
@@ -32,16 +32,16 @@
                   </div>
                 </div>
                 <p class="mt-5 text-xl lg:text-2xl font-semibold truncate">
-                  <a href="#" title="" class="text-black">{{ item.blogName }}</a>
+                  <a :href="'/blogs/' + item._id" class="text-black">{{ item.blogName }}</a>
                 </p>
                 <p class="mt-4 text-base text-gray-600 truncate">{{ item.blogDescription }}</p>
                 <div class="flex items-center gap-4 text-xl py-2">
-                  <UIcon name="i-heroicons-hand-thumb-up" class="bg-gray-700" @click="handleLike(item._id)"/>
+                  <UIcon name="i-heroicons-hand-thumb-up" class="bg-gray-700" @click="handleLikes(item._id)" />
                   <span class="text-gray-700">{{ likeCounts[item._id] || 0 }}</span>
-                  <UIcon name="i-heroicons-hand-thumb-down" class="bg-black" @click="handleDislike(item._id)"/>
-                  <span class="text-gray-700">{{ dislikeCounts[item._id] || 0 }}</span>
+                   <UIcon name="i-heroicons-hand-thumb-down" class="bg-black" @click="handledisLikes(item._id)" />
+                  <span class="text-gray-700">{{ dislikeCounts[item._id] || 0 }}</span> 
                 </div>
-                <a :href="item._id" class="inline-flex items-center justify-center pb-0.5 mt-5 text-base font-semibold text-blue-600 transition-all duration-200 border-b-2 border-transparent hover:border-blue-600">
+                <a :href="'/blogs/' + item._id" class="inline-flex items-center justify-center pb-0.5 mt-5 text-base font-semibold text-blue-600 transition-all duration-200 border-b-2 border-transparent hover:border-blue-600">
                   Continue Reading
                   <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -62,9 +62,6 @@
                 </div>
               </div>
             </template>
-            <div v-else>
-              <span>No blogs found</span>
-            </div>
           </div>
         </div>
       </div>
@@ -72,87 +69,80 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useBlogStore } from '@/stores/blogs';
+import { useBlogStore } from '~/stores/blogs';
+import { useAuthStore } from '~/stores/auth';
 
+const blogStore = useBlogStore();
+const authStore = useAuthStore();
+const searchQuery = ref('');
 const likeCounts = ref<{ [key: string]: number }>({});
 const dislikeCounts = ref<{ [key: string]: number }>({});
-const likedBlogs = ref<{ [key: string]: boolean }>({});
-const dislikedBlogs = ref<{ [key: string]: boolean }>({});
+const likedBlogs = ref<{ likes: { [key: string]: boolean } }>({ likes: {} });
 
-const searchQuery = ref('');
-const blogStore = useBlogStore();
+const handleLikes = async (blogId: string) => {
+  try {
+    const userId = authStore.user?.id;
 
-const loadInteractionData = () => {
-  const storedLikes = localStorage.getItem('likeCounts');
-  const storedDislikes = localStorage.getItem('dislikeCounts');
-  const storedLikedBlogs = localStorage.getItem('likedBlogs');
-  const storedDislikedBlogs = localStorage.getItem('dislikedBlogs');
+    if (!likedBlogs.value.likes[blogId]) {
+      await blogStore.handleLike(blogId);
+
+      likeCounts.value[blogId] = (likeCounts.value[blogId] || 0) + 1;
+      likedBlogs.value.likes[blogId] = true;
+
+      console.log('User ID:', userId, 'liked blog ID:', blogId);
+    } else {
+      await blogStore.handleDislike(blogId);
+
+      likeCounts.value[blogId] = Math.max(likeCounts.value[blogId] - 1, 0);
+      likedBlogs.value.likes[blogId] = false;
+
+      console.log('User ID:', userId, 'unliked blog ID:', blogId);
+    }
+  } catch (error) {
+    console.error('Error liking/unliking the blog:', error);
+  }
+};
+
+const handledisLikes = async (blogId: string) => {
+  try {
+    const userId = authStore.user?.id;
+
+    if (likedBlogs.value.likes[blogId]) {
+      await blogStore.handleDislike(blogId);
+
+
+      likeCounts.value[blogId] = Math.max((likeCounts.value[blogId] || 0) - 1, 0);
+      likedBlogs.value.likes[blogId] = false;
+
+      console.log('User ID:', userId, 'disliked blog ID:', blogId);
+    } else {
+
+      await blogStore.handleLike(blogId);
+
   
-  likeCounts.value = storedLikes ? JSON.parse(storedLikes) : {};
-  dislikeCounts.value = storedDislikes ? JSON.parse(storedDislikes) : {};
-  likedBlogs.value = storedLikedBlogs ? JSON.parse(storedLikedBlogs) : {};
-  dislikedBlogs.value = storedDislikedBlogs ? JSON.parse(storedDislikedBlogs) : {};
-};
+      likeCounts.value[blogId] = (likeCounts.value[blogId] || 0) + 1;
+      likedBlogs.value.likes[blogId] = true;
 
-const saveInteractionData = () => {
-  localStorage.setItem('likeCounts', JSON.stringify(likeCounts.value));
-  localStorage.setItem('dislikeCounts', JSON.stringify(dislikeCounts.value));
-  localStorage.setItem('likedBlogs', JSON.stringify(likedBlogs.value));
-  localStorage.setItem('dislikedBlogs', JSON.stringify(dislikedBlogs.value));
-};
-
-const handleLike = (blogId: string) => {
-  if (likedBlogs.value[blogId]) {
-    // If already liked, remove the like
-    likeCounts.value[blogId] = Math.max((likeCounts.value[blogId] || 1) - 1, 0);
-    likedBlogs.value[blogId] = false;
-  } else {
-    // If disliked, remove the dislike
-    if (dislikedBlogs.value[blogId]) {
-      dislikeCounts.value[blogId] = Math.max((dislikeCounts.value[blogId] || 1) - 1, 0);
-      dislikedBlogs.value[blogId] = false;
+      console.log('User ID:', userId, 'liked blog ID:', blogId);
     }
-    // Add the like
-    likeCounts.value[blogId] = (likeCounts.value[blogId] || 0) + 1;
-    likedBlogs.value[blogId] = true;
+  } catch (error) {
+    console.error('Error liking/disliking the blog:', error);
   }
-  saveInteractionData();
 };
 
-const handleDislike = (blogId: string) => {
-  if (dislikedBlogs.value[blogId]) {
-    // If already disliked, remove the dislike
-    dislikeCounts.value[blogId] = Math.max((dislikeCounts.value[blogId] || 1) - 1, 0);
-    dislikedBlogs.value[blogId] = false;
-  } else {
-    // If liked, remove the like
-    if (likedBlogs.value[blogId]) {
-      likeCounts.value[blogId] = Math.max((likeCounts.value[blogId] || 1) - 1, 0);
-      likedBlogs.value[blogId] = false;
-    }
-    // Add the dislike
-    dislikeCounts.value[blogId] = (dislikeCounts.value[blogId] || 0) + 1;
-    dislikedBlogs.value[blogId] = true;
-  }
-  saveInteractionData();
-};
-
-const filteredBlogs = computed(() => {
-  if (!blogStore.blogs) return [];
-  return blogStore.blogs
-    .filter((blog) => blog.blogName.toLowerCase().includes(searchQuery.value.toLowerCase()) || blog.blogStatus.toLowerCase().includes(searchQuery.value.toLowerCase()))
-    .reverse();
+const filteredBlogs = computed(() =>
+  blogStore.blogs.filter(blog =>
+    blog.blogName.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+  .reverse()
+);
+onMounted(() => {
+  blogStore.fetchBlogs();
 });
-
-onMounted(async () => {
-  await blogStore.fetchBlogs();
-  loadInteractionData();
-});
-
 </script>
 
 <style scoped>
-/* Add any custom styling here if needed */
+
 </style>

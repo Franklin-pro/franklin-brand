@@ -7,9 +7,9 @@
                         <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Hey 👋 I am <br
                                 class="block sm:hidden" /> Franklin Developers</h2>
                         <p class="max-w-lg mt-3 text-xl leading-relaxed text-gray-600 md:mt-8">I'm Franklin Ndanyuzwe, a
-                            passionate software developer with expertise in React, Next.js, Nuxt.js, and Vue.js. With
+                            passionate software developer with expertise in React, Next.js,Vue.js and Flutter. With
                             over a year of experience, I specialize in building full-stack applications, focusing on
-                            frontend development, API integration, and state management using modern frameworks like
+                            frontend development,mobile App with Flutter, API integration, and state management using modern frameworks like
                             Pinia and Tailwind CSS.</p>
 
                         <p class="mt-4 text-xl text-gray-600 md:mt-8">

@@ -11,11 +11,11 @@ interface ApiResponse<T> {
 
 export const useBlogStore = defineStore('blogs', () => {
   const blogs = ref<Blogs[]>([]);
-  const comment = ref<Comment[]>([])
+  const comment = ref<Comment[]>([]);
   const router = useRouter();
+  const likes = ref<{ [key: string]: boolean }>({});
+  const dislikes = ref<{ [key: string]: boolean }>({});
   const user = ref<Blogs | null>(null);
-
-
 
   const setBlogs = (data: Blogs | null) => {
     user.value = data;
@@ -38,14 +38,12 @@ export const useBlogStore = defineStore('blogs', () => {
   const fetchBlog = async (id: string): Promise<Blogs> => {
     try {
       const response = await axios.get<ApiResponse<Blogs>>(`https://realme-backend.onrender.com/v1/blogs/${id}`);
-     
       return response.data.data; 
     } catch (error) {
       console.error('Failed to fetch blog', error);
-      throw error; 
+      throw error;
     }
   };
-  
   
   const createBlog = async (data: BlogFormState) => {
     try {
@@ -84,8 +82,6 @@ export const useBlogStore = defineStore('blogs', () => {
     }
   };
 
-
-
   const deleteBlog = async (id: string) => {
     try {
       const response = await axios.delete<ApiResponse<null>>(`https://realme-backend.onrender.com/v1/blogs/${id}`);
@@ -100,7 +96,7 @@ export const useBlogStore = defineStore('blogs', () => {
     try {
       const response = await axios.post(`https://realme-backend.onrender.com/api/blogs/${blogId}/like`);
       const updatedBlog = response.data.data;
-      updateBlogInStore(updatedBlog); // Update the blog in the store with the new like count
+      updateBlogInStore(updatedBlog); 
     } catch (error) {
       console.error('Failed to like blog', error);
     }
@@ -110,32 +106,11 @@ export const useBlogStore = defineStore('blogs', () => {
     try {
       const response = await axios.post(`https://realme-backend.onrender.com/api/blogs/${blogId}/dislike`);
       const updatedBlog = response.data.data;
-      updateBlogInStore(updatedBlog); // Update the blog in the store with the new dislike count
+      updateBlogInStore(updatedBlog); 
     } catch (error) {
       console.error('Failed to dislike blog', error);
     }
   };
-
-  // const addComment = async (blogId: string, comment: string) => {
-  //   try {
-  //     const response = await axios.post(`http://localhost:3030/v1/blogs/${blogId}`, { comment });
-  //     const updatedBlog = response.data.data;
-  //     updateBlogInStore(updatedBlog);
-  //   } catch (error) {
-  //     console.error('Failed to post comment', error);
-  //   }
-  // };
-
-  // const fetchComments = async (blogId: string) => {
-  //   try {
-  //     const response = await axios.get<ApiResponse<Comment[]>>(`/v1/blogs/${blogId}`);
-  //     comment.value = response.data.data;
-  //     return comment.value;
-  //   } catch (error) {
-  //     console.error('Failed to fetch comments', error);
-  //     throw error;
-  //   }
-  // };
 
   const updateBlogInStore = (updatedBlog: Blogs) => {
     const index = blogs.value.findIndex(blog => blog._id === updatedBlog._id);
@@ -144,7 +119,5 @@ export const useBlogStore = defineStore('blogs', () => {
     }
   };
 
-
-
-  return { blogs,comment, fetchBlogs, handleLike, handleDislike ,setBlogs, fetchBlog, createBlog, updateBlog, deleteBlog };
+  return { blogs, likes, dislikes, comment, fetchBlogs, handleLike, handleDislike, setBlogs, fetchBlog, createBlog, updateBlog, deleteBlog };
 });
