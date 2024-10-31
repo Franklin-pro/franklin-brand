@@ -1,8 +1,8 @@
 <template>
   <div>
-    <header class="pb-6 bg-white lg:pb-0">
+    <header class="pb-6 lg:pb-0" :class="['fixed top-0 left-0 w-full bg-opacity-80 backdrop-blur-lg z-10 transition-shadow duration-300']">
       <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <nav class="flex items-center justify-between h-16 lg:h-20">
+        <nav class=" flex items-center px-9 justify-between h-16 lg:h-20">
           <div class="flex-shrink-0">
             <h1 class="text-2xl font-extrabold text-blue-600">Franklin.</h1>
           </div>
@@ -10,7 +10,7 @@
             <div v-for="item in items" class="flow-root">
               <div class="flex flex-col px-6 -my-2 space-y-1">
                 <a :href="item.path" title=""
-                  class="inline-flex py-2 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+                  class="inline-flex py-2 font-semibold text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                   {{ item.label }} </a>
               </div>
             </div>
@@ -44,7 +44,7 @@
           </div>
      
         </nav>
-        <nav class="pt-4 pb-6 bg-white border border-gray-200 rounded-md shadow-md lg:hidden">
+        <nav class="pt-4 pb-6  lg:hidden">
           <div v-for="item in items" class="flow-root">
             <div class="flex flex-col px-6 -my-2 space-y-1">
               <a :href="item.path" title=""
