@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="pb-6 lg:pb-0" :class="['fixed top-0 left-0 w-full bg-opacity-80 backdrop-blur-lg z-10 transition-shadow duration-300']">
+    <header class="pb-6 lg:pb-0 bg-gray-50">
       <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <nav class=" flex items-center px-9 justify-between h-16 lg:h-20">
           <div class="flex-shrink-0">
