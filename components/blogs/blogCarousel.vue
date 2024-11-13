@@ -11,14 +11,14 @@
         class="carousel-item w-full lg:w-1/3 flex-shrink-0 p-4"
       >
         <img :src="item.blogImage?.url" class="w-full h-60 object-cover rounded-lg" draggable="false" />
-        <div class="carousel-content p-4 bg-white">
+        <div class="carousel-content p-4 dark:bg-gray-700 bg-white">
           <span class="carousel-status text-gray-500 text-xs uppercase">{{ item.blogStatus }}</span>
           <h3 class=" text-lg text-black font-bold mt-2">{{ item.blogName}}</h3>
           <p class="carousel-description text-sm truncate text-gray-600">{{ item.blogDescription}}</p>
         </div>
       </div>
       <template v-else>
-              <div v-for="n in 6" :key="n" class="p-5 bg-white rounded-xl">
+              <div v-for="n in 6" :key="n" class="p-5 dark:bg-gray-700 bg-white rounded-xl">
                 <div class="relative lg:mb-12">
                   <USkeleton class="h-[300px] w-[400px]" :ui="{ rounded: 'rounded-md' }" />
                 </div>
