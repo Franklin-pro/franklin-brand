@@ -1,6 +1,6 @@
 <template>
   <div>
-      <section class="py-10 bg-white sm:py-16 lg:py-24">
+      <section class="py-10 bg-white dark:bg-gray-900 sm:py-16 lg:py-24">
           <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
               <div class="max-w-2xl mx-auto text-center">
                   <h2 class="text-2xl font-bold text-blue-600 sm:text-4xl sm:leading-tight">Trusted by world class
