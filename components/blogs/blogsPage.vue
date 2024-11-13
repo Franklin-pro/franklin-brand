@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="py-10 bg-gray-50 sm:py-16 lg:py-24">
+    <section class="py-10 bg-gray-50 dark:bg-gray-900 sm:py-16 lg:py-24">
       <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="flex flex-col lg:flex-row justify-between gap-5 items-center py-4">
           <div>
@@ -20,7 +20,7 @@
         <div class="lg:max-w-full">
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 rounded">
             <div v-if="filteredBlogs.length > 0" v-for="item in filteredBlogs" :key="item._id">
-              <div class="p-5 bg-white rounded-xl">
+              <div class="p-5 dark:bg-gray-800 bg-white rounded-xl">
                 <div class="relative">
                   <a :href="'/blogs/' + item._id" class="block aspect-w-4 aspect-h-3">
                     <img class="object-cover w-full h-full" :src="item.blogImage?.url" alt="" />
@@ -32,14 +32,14 @@
                   </div>
                 </div>
                 <p class="mt-5 text-xl lg:text-2xl font-semibold truncate">
-                  <a :href="'/blogs/' + item._id" class="text-black">{{ item.blogName }}</a>
+                  <a :href="'/blogs/' + item._id">{{ item.blogName }}</a>
                 </p>
-                <p class="mt-4 text-base text-gray-600 truncate">{{ item.blogDescription }}</p>
+                <p class="mt-4 text-base truncate">{{ item.blogDescription }}</p>
                 <div class="flex items-center gap-4 text-xl py-2">
-                  <UIcon name="i-heroicons-hand-thumb-up" class="bg-gray-700" @click="handleLikes(item._id)" />
-                  <span class="text-gray-700">{{ likeCounts[item._id] || 0 }}</span>
-                   <UIcon name="i-heroicons-hand-thumb-down" class="bg-black" @click="handledisLikes(item._id)" />
-                  <span class="text-gray-700">{{ dislikeCounts[item._id] || 0 }}</span> 
+                  <UIcon name="i-heroicons-hand-thumb-up" class="" @click="handleLikes(item._id)" />
+                  <span >{{ likeCounts[item._id] || 0 }}</span>
+                   <UIcon name="i-heroicons-hand-thumb-down" class="" @click="handledisLikes(item._id)" />
+                  <span>{{ dislikeCounts[item._id] || 0 }}</span> 
                 </div>
                 <a :href="'/blogs/' + item._id" class="inline-flex items-center justify-center pb-0.5 mt-5 text-base font-semibold text-blue-600 transition-all duration-200 border-b-2 border-transparent hover:border-blue-600">
                   Continue Reading

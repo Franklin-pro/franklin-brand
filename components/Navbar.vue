@@ -35,7 +35,7 @@
                   </template>
                 </UPopover>
               </UTooltip>
-              <div class="border p-2 flex cursor-pointer items-center rounded-full" @click="toggleMode">
+              <div class="border max-sm:hidden max p-2 flex cursor-pointer items-center rounded-full" @click="toggleMode">
                 <UIcon :name="switchMode ? 'i-heroicons-sun' : 'i-heroicons-moon'"/>
               </div>
             </div>
@@ -49,6 +49,9 @@
               </a>
             </div>
           </div>
+          <div class="border max p-2 flex cursor-pointer items-center rounded-full" @click="toggleMode">
+                <UIcon :name="switchMode ? 'i-heroicons-sun' : 'i-heroicons-moon'"/>
+              </div>
           <div class="px-6 mt-6">
             <a href="/loginAccount" @click="logout" class="inline-flex justify-center px-4 py-3 text-base font-semibold text-white bg-red-600 transition-all duration-200 rounded-md hover:bg-blue-700 focus:bg-blue-700">
               Log-Out
