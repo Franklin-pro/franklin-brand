@@ -172,7 +172,12 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     console.error(errors);
     return;
   }
+  isLoading.value = true;
   await memberStore.createAccount(state);
+  isLoading.value = false;
+  navigateTo('/loginAccount');
+ 
+
 }
 </script>
 
