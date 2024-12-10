@@ -69,20 +69,19 @@
                                   </div>
                               </div>
   
-                              <div>
-                                  <label for="" class="text-base font-medium dark:text-gray-300"> Phone number </label>
-                                  <div class="mt-2.5 relative">
-                                      <Input type="tel" name="" id="" placeholder="Phone Number" v-model="state.phoneNumber" class="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600" />
-                                  </div>
-                              </div>
-  
-                              <div>
-                                  <label for="" class="text-base font-medium dark:text-gray-300"> Company name </label>
-                                  <div class="mt-2.5 relative">
-                                      <input type="text" name="" id="" placeholder="Company Name" v-model="state.campanyName" class="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600" />
-                                  </div>
-                              </div>
-  
+                              <div class="sm:col-span-2">
+                                <label for="" class="text-base font-medium dark:text-gray-300"> Company name </label>
+                                <div class="mt-2.5 relative">
+                                    <input
+                                    type="text"
+                                    name=""
+                                    id=""
+                                    placeholder="Company Name"
+                                    v-model="state.campanyName"
+                                    class="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
+                                    />
+                                </div>
+                                </div>
                               <div class="sm:col-span-2">
                                   <label for="" class="text-base font-medium dark:text-gray-300"> Message </label>
                                   <div class="mt-2.5 relative">
@@ -118,7 +117,6 @@
     const state = reactive<MessageFormState>({
       fullName: '',
       email: '',
-      phoneNumber: '',
       campanyName: '',
       message: '',
   
@@ -130,35 +128,35 @@
   const alertMessage = ref()
     const messageStore = useMessageStore();
   
-  const validate = (state: MessageFormState): boolean => {
-    return (
-      state.fullName.trim() !== '' &&
-      state.email.trim() !== '' &&
-      state.phoneNumber.trim() !== '' &&
-      state.campanyName.trim() !== '' &&
-      state.message.trim() !== ''
-    );
-  };
+    const validate = (state: MessageFormState): boolean => {
+  return (
+    state.fullName?.trim() !== '' &&
+    state.email?.trim() !== '' &&
+    state.campanyName?.trim() !== '' &&
+    state.message?.trim() !== ''
+  );
+};
+
   
-    const onSubmit = async () => {
-      if (!validate(state)) {
-        alert('Please fill in all fields.');
-        return;
-      }
-    isLoading.value =true
-      try {
-        await messageStore.createMessage(state);
-        alertMessage.value="message sent"
-        setTimeout(()=>{
-          alertMessage.value=null
-        },3000)
-        window.location.reload()
-      } catch (error) {
-        console.error('Error sending message:', error);
-      }
-      finally{
-          isLoading.value =false;
-      }
-    };
+const onSubmit = async () => {
+  if (!validate(state)) {
+    alert('Please fill in all fields.');
+    return;
+  }
+  isLoading.value = true;
+  try {
+    await messageStore.createMessage(state);
+    alertMessage.value = "Message sent successfully!";
+    setTimeout(() => {
+      alertMessage.value = null;
+    }, 3000);
+    Object.keys(state).forEach((key) => (state[key as keyof MessageFormState] = ''));
+  } catch (error) {
+    console.error('Error sending message:', error);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
     </script>
     

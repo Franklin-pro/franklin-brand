@@ -13,11 +13,11 @@
       </div>
     <div class=" rounded-xl p-4">
       <div class="grid lg:grid-cols-2 gap-4">
-        <div v-for="(item, index) in filteredMembers" :key="item.id">
+        <div v-if="filteredMembers.length">
+          <div v-for="(item, index) in filteredMembers" :key="item.id">
           <div>
             <div class="flex py-4 gap-4">
               <h1 class="text-md font-bold text-gray-500">Email: <span>{{ item.email }}</span></h1> |
-              <h1 class="text-md font-bol text-gray-500"> Phone Number: <span>(+250){{item.phoneNumber }}</span></h1>
             </div>
             <div    :class="[
                 'border flex justify-between p-4 border-gray-300 rounded-xl',
@@ -35,6 +35,15 @@
             </div>
           </div>
         </div>
+        </div>
+        <div v-else>
+          <div class="flex justify-center flex-col">
+            <span class="text-center text-4xl ">no message yet</span>
+            <img src="https://img.freepik.com/premium-vector/ban-message-icon-logo-label-vector-illustration_213497-2289.jpg?semt=ais_hybrid" alt="">
+          </div>
+         
+        </div>
+      
       </div>
     </div>
   </div>

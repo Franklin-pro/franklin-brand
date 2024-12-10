@@ -1,7 +1,7 @@
 <template>
   <div class="p-5">
     <div class="flex items-center justify-between py-5">
-      <h1 class="font-bold text-5xl text-primary">Blogs List</h1>
+      <h1 class="font-bold text-2xl text-primary">Blogs List</h1>
       <UTooltip text="search member...">
         <UInput
           icon="i-heroicons-magnifying-glass-20-solid"

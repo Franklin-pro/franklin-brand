@@ -12,9 +12,11 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.8",
     "axios": "^1.7.5",
+    "chart.js": "^4.4.7",
     "nuxt": "^3.13.0",
     "pinia": "^2.2.2",
-    "vue": "latest"
+    "vue": "latest",
+    "vue-chartjs": "^5.3.2"
   },
   "devDependencies": {
     "@nuxt/ui": "^2.18.4",

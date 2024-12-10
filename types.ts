@@ -12,7 +12,6 @@ export interface CreateBlogData {
   export interface MessageFormState {
     fullName:string,
     email:string,
-    phoneNumber:string,
     campanyName:string,
     message:string
   }
@@ -34,7 +33,6 @@ export interface Message {
   _id:string,
   fullName:string,
   email:string,
-  phoneNumber:Number,
   campanyName:string,
   message:string
 }

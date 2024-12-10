@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   modules: ['@nuxt/ui', '@pinia/nuxt', '@primevue/nuxt-module','@nuxtjs/google-fonts'],
   googleFonts: {
     families: {
-      WorkSans: [400, 700], // Replace with your desired font and weights
+      Lexend: [400, 700], 
     },
     display: 'swap'
   },
