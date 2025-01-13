@@ -29,7 +29,7 @@
                     <div class="p-4">
                       <p class="text-gray-500 pb-3">{{ userEmail }}</p>
                       <a href="/loginAccount" @click="logout" class="items-center justify-center hover:text-red-500 hidden text-base font-semibold transition-all duration-200 lg:inline-flex focus:bg-blue-700">
-                        Log-Out <UIcon name="i-heroicons-arrow-right-start-on-rectangle" class="text-xl"/>
+                        Log-In <UIcon name="i-heroicons-arrow-right-start-on-rectangle" class="text-xl"/>
                       </a>
                     </div>
                   </template>
@@ -51,7 +51,7 @@
           </div>
           <div class="px-6 mt-6">
             <a href="/loginAccount" @click="logout" class="inline-flex justify-center px-4 py-3 text-base font-semibold text-white bg-red-600 transition-all duration-200 rounded-md hover:bg-blue-700 focus:bg-blue-700">
-              Log-Out
+              Log-In
             </a>
           </div>
         </nav>
