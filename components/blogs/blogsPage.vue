@@ -91,14 +91,14 @@ const handleLikes = async (blogId: string) => {
       likeCounts.value[blogId] = (likeCounts.value[blogId] || 0) + 1;
       likedBlogs.value.likes[blogId] = true;
 
-      console.log('User ID:', userId, 'liked blog ID:', blogId);
+     
     } else {
       await blogStore.handleDislike(blogId);
 
       likeCounts.value[blogId] = Math.max(likeCounts.value[blogId] - 1, 0);
       likedBlogs.value.likes[blogId] = false;
 
-      console.log('User ID:', userId, 'unliked blog ID:', blogId);
+   
     }
   } catch (error) {
     console.error('Error liking/unliking the blog:', error);
@@ -116,7 +116,7 @@ const handledisLikes = async (blogId: string) => {
       likeCounts.value[blogId] = Math.max((likeCounts.value[blogId] || 0) - 1, 0);
       likedBlogs.value.likes[blogId] = false;
 
-      console.log('User ID:', userId, 'disliked blog ID:', blogId);
+
     } else {
 
       await blogStore.handleLike(blogId);
@@ -125,7 +125,7 @@ const handledisLikes = async (blogId: string) => {
       likeCounts.value[blogId] = (likeCounts.value[blogId] || 0) + 1;
       likedBlogs.value.likes[blogId] = true;
 
-      console.log('User ID:', userId, 'liked blog ID:', blogId);
+
     }
   } catch (error) {
     console.error('Error liking/disliking the blog:', error);

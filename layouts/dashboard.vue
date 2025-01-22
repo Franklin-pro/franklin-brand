@@ -205,7 +205,7 @@ const logout = () => {
 onMounted(() => {
   if (isClient) {
     const userInfo = JSON.parse(localStorage.getItem("user") || '{}')
-    console.log('User Info:', userInfo)
+ 
     memberId.value = userInfo._id || ''
 
     memberStore.fetchUser(memberId.value)

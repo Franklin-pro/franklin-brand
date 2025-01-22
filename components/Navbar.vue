@@ -35,6 +35,15 @@
                   </template>
                 </UPopover>
               </UTooltip>
+              <a
+                  href="/loginAccount"
+                  @click.prevent="isLoggedIn ? logout() : navigateToLogin()"
+                  class="items-center justify-center text-base font-semibold transition-all duration-200 lg:inline-flex hover:text-red-500 focus:bg-blue-700"
+                >
+                  {{ isLoggedIn ? 'Log-Out' : '' }}
+                  <UIcon :name="isLoggedIn ? 'i-heroicons-arrow-right-on-rectangle' : 'i-heroicons-arrow-right-start-on-rectangle'" class="text-xl" />
+                </a>
+           
               <div class="border p-2 flex cursor-pointer items-center rounded-full" @click="toggleMode">
                 <UIcon :name="switchMode ? 'i-heroicons-sun' : 'i-heroicons-moon'"/>
               </div>
@@ -50,9 +59,14 @@
             </div>
           </div>
           <div class="px-6 mt-6">
-            <a href="/loginAccount" @click="logout" class="inline-flex justify-center px-4 py-3 text-base font-semibold text-white bg-red-600 transition-all duration-200 rounded-md hover:bg-blue-700 focus:bg-blue-700">
-              Log-In
-            </a>
+            <a
+                  href="/loginAccount"
+                  @click.prevent="isLoggedIn ? logout() : navigateToLogin()"
+                  class="items-center justify-center text-base font-semibold transition-all duration-200 lg:inline-flex hover:text-red-500 focus:bg-blue-700"
+                >
+                  {{ isLoggedIn ? 'Log-Out' : '' }}
+                  <UIcon :name="isLoggedIn ? 'i-heroicons-arrow-right-on-rectangle' : 'i-heroicons-arrow-right-start-on-rectangle'" class="text-xl" />
+                </a>
           </div>
         </nav>
       </div>
@@ -70,6 +84,8 @@ const items = ref([
   { label: "Contact Us", icon: "i-heroicons-chat-bubble-left-ellipsis", path: "/contactme" },
   { label: "Blogs", icon: "i-heroicons-bookmark", path: "/blogs/blogs" },
 ]);
+
+const isLoggedIn = ref(false);
 
 const switchMode = ref(false);
 
@@ -95,6 +111,12 @@ const userEmail = computed(() => {
 
 const logout = async () => {
   await userStore.logout();
+  isLoggedIn.value = !isLoggedIn.value;
+  
+};
+const navigateToLogin = () => {
+  navigateTo('/loginAccount');
+  isLoggedIn.value = true;
 };
 
 // Function to toggle the theme mode

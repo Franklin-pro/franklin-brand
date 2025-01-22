@@ -15,25 +15,21 @@
       <div class="grid lg:grid-cols-2 gap-4">
         <div v-if="filteredMembers.length">
           <div v-for="(item, index) in filteredMembers" :key="item.id">
-          <div>
-            <div class="flex py-4 gap-4">
-              <h1 class="text-md font-bold text-gray-500">Email: <span>{{ item.email }}</span></h1> |
-            </div>
-            <div    :class="[
-                'border flex justify-between p-4 border-gray-300 rounded-xl',
-                index === 0 ? 'border-green-500 border-4' : ''
-              ]">
-              <div>
-                <h3 class="font-extrabold text-xl pb-4"><span>{{ item.fullName }}</span></h3>
-                <p class="py-2">{{ item.message }}</p> 
-              </div>
-              <div>
-                <UTooltip text="delete message">
-                  <UIcon name="i-heroicons-trash" class="text-xl cursor-pointer hover:bg-orange-600 duration-500" @click="deleteMessage(item._id)" />
-                </UTooltip>
-              </div>
-            </div>
-          </div>
+         
+<ol class="relative border-s border-gray-200 dark:border-gray-700">                  
+    <li class="mb-10 ms-4">
+        <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+        <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+          {{ item.email }} from {{ item.campanyName }}
+        </time>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ item.fullName }}</h3>
+        <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{ item.message }}</p>
+   
+    </li>
+    
+</ol>
+
+
         </div>
         </div>
         <div v-else>
