@@ -35,6 +35,15 @@ export const useBlogStore = defineStore('blogs', () => {
     }
   };
 
+const createPayment = async (data: any) => {
+    try {
+      const response = await axios.post('htpp://localhost:3030/payment', data);
+      alert(response.data.message);
+      router.push('/Dashboard/createPayment');
+    } catch (error) {
+      console.error('Failed to create payment', error);
+    }
+  };
   const fetchBlog = async (id: string): Promise<Blogs> => {
     try {
       const response = await axios.get<ApiResponse<Blogs>>(`https://realme-backend.onrender.com/v1/blogs/${id}`);
@@ -119,5 +128,5 @@ export const useBlogStore = defineStore('blogs', () => {
     }
   };
 
-  return { blogs, likes, dislikes, comment, fetchBlogs, handleLike, handleDislike, setBlogs, fetchBlog, createBlog, updateBlog, deleteBlog };
+  return { blogs, likes, dislikes, comment,createPayment, fetchBlogs, handleLike, handleDislike, setBlogs, fetchBlog, createBlog, updateBlog, deleteBlog };
 });

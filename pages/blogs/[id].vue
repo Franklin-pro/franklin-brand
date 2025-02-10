@@ -35,6 +35,9 @@
                   <UIcon name="i-heroicons-hand-thumb-down" class="bg-black" @click="handleDislike(blog._id)"/>
                   <span class="text-gray-700">{{ dislikeCounts[blog._id] || 0 }}</span>
                 </div>
+                <div class="flex items-center gap-4 text-xl py-2">
+               <UButton label="Book Now" @click="CreatePayment"/>
+                </div>
           </div>
         </div>
 
@@ -108,6 +111,11 @@ const handleLike = (blogId: string) => {
   }
   saveInteractionData();
 };
+
+const CreatePayment = () => {
+  blogStore.createPayment(blog.value)
+  navigateTo('/payment')
+}
 
 const handleDislike = (blogId: string) => {
   if (dislikedBlogs.value[blogId]) {
